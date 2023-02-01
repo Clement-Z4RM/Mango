@@ -73,11 +73,11 @@ def update(args):
         os.system(f"chmod +x {bin_path}mango")
         os.system(f"rm -rf {bin_path}Mango-{version}.tar.gz {bin_path}Clement-Lnrd-Mango-*")
         exit()
-    if (response and version != "v1.0.1"):
+    if (response and version != "v1.0.2"):
         print("New version of Mango available. You can update it doing \"\033[3mmango -u, --update\033[0m\".\n")
 
 def print_version():
-    print("Mango v1.0.1")
+    print("Mango v1.0.2")
     exit()
 
 def get_exclude_files(args):
