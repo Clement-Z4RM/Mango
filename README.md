@@ -19,9 +19,55 @@ For a detailed usage, type:
 mango -h, --help
 ```
 
-## ➡ Example
+## ➡ Examples
 
-![](https://i.imgur.com/wcTcXVx.png)
+With this C file:
+```c
+#include <stdio.h>
+
+int main()
+{
+    printf("Hello world!");
+}
+```
+▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬
+```
+>$ mango
+
+main.c:1: C-G1
+File header
+C files and every Makefile must always start with the standard header of the school.
+
+main.c:3: C-F6
+Functions without parameters
+A function taking no parameters must take void as a parameter in the function declaration.
+
+main.c:6: C-A3
+Line break at the end of file
+Files must end with a line break.
+
+1 Major | 1 Minor | 1 Info
+```
+
+```
+>$ mango --exclude-errors C-F6
+
+main.c:1: C-G1
+File header
+C files and every Makefile must always start with the standard header of the school.
+
+main.c:6: C-A3
+Line break at the end of file
+Files must end with a line break.
+
+0 Major | 1 Minor | 1 Info
+```
+
+```
+>$ mango --exclude-files main.c
+
+✅ There isn't coding style error
+```
 
 ## ➕ Contributing
 
