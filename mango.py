@@ -6,6 +6,7 @@ import argparse
 from shutil import which
 import subprocess
 import requests
+import time
 
 types = [" INFO", " MINOR", " MAJOR"]
 
@@ -53,6 +54,7 @@ def set_arguments():
     parser = argparse.ArgumentParser()
     parser.add_argument("-Ee", "-Eerrors", "--exclude-errors", nargs = '+', help = "Exclude coding style errors from report")
     parser.add_argument("-Ef", "-Efiles", "--exclude-files", nargs = '+', help = "Exclude files from coding style checking")
+    parser.add_argument("-w", "--watch", nargs = 1, help = "Watch for changes in the repository every x seconds")
     parser.add_argument("-v", "--version", action = "store_true", help = "Show Mango version")
     parser.add_argument("-u", "--update", action = "store_true", help = "Update Mango to last version")
     return parser.parse_args()
@@ -73,11 +75,11 @@ def update(args):
         os.system(f"chmod +x {bin_path}mango")
         os.system(f"rm -rf {bin_path}Mango-{version}.tar.gz {bin_path}Clement-Lnrd-Mango-*")
         exit()
-    if (response and version != "v1.1.1"):
+    if (response and version != "v1.2.0"):
         print("New version of Mango available. You can update it doing \"\033[3mmango -u, --update\033[0m\".\n")
 
 def print_version():
-    print("Mango v1.1.1")
+    print("Mango v1.2.0")
     exit()
 
 def get_exclude_files(args):
@@ -117,8 +119,10 @@ def print_error(line, index):
     color = ("\033[0m" + colors[types.index(line[2])])
     print(f"{color}\033[1m{line[0]}:{line[1]}: {line[3]}{color}\n{descriptions[index][0]}\n{descriptions[index][1]}\n")
 
-def mango(exclude_files, exclude_errors):
+def mango(exclude_files, exclude_errors, watch):
     out = coding_style()
+    if (watch):
+        os.system("clear")
     err_nb = [0, 0, 0]
     if (not out):
         print("✅ There isn't coding style error")
@@ -155,7 +159,17 @@ def main():
         print_version()
     if (which("coding-style") is None):
         download_coding_style()
-    mango(get_exclude_files(args), get_exclude_errors(args))
+    if (args.watch):
+        while (True):
+            try:
+                mango(get_exclude_files(args), get_exclude_errors(args), args.watch)
+                time.sleep(int(args.watch[0]))
+            except KeyboardInterrupt:
+                exit()
+            except:
+                exit(84)
+    else:
+        mango(get_exclude_files(args), get_exclude_errors(args), args.watch)
 
 if __name__ == "__main__":
     main()
