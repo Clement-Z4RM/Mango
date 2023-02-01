@@ -51,14 +51,15 @@ def execute_as_sudo():
 
 def set_arguments():
     parser = argparse.ArgumentParser()
-    parser.add_argument("-Ee", "--exclude-errors", nargs = '+', help = "Exclude coding style errors from report")
-    parser.add_argument("-Ef", "--exclude-files", nargs = '+', help = "Exclude files from coding style checking")
+    parser.add_argument("-Ee", "-Eerrors", "--exclude-errors", nargs = '+', help = "Exclude coding style errors from report")
+    parser.add_argument("-Ef", "-Efiles", "--exclude-files", nargs = '+', help = "Exclude files from coding style checking")
     parser.add_argument("-v", "--version", action = "store_true", help = "Show Mango version")
     parser.add_argument("-u", "--update", action = "store_true", help = "Update Mango to last version")
     return parser.parse_args()
 
 def download_coding_style():
     print("Downloading coding-style...\n")
+    os.system(f"mkdir -p {bin_path}")
     os.system(f"wget https://raw.githubusercontent.com/Epitech/coding-style-checker/main/coding-style.sh -O {bin_path}coding-style 2> /dev/null")
     os.system(f"chmod +x {bin_path}coding-style")
 
@@ -67,6 +68,7 @@ def update(args):
     if (response):
         version = response.json()["name"]
     if (args.update):
+        os.system(f"mkdir -p {bin_path}")
         os.system(f"wget https://api.github.com/repos/Clement-Lnrd/Mango/tarball/{version} -O {bin_path}Mango-{version}.tar.gz 2> /dev/null")
         os.system(f"tar -xzf {bin_path}Mango-{version}.tar.gz -C {bin_path}")
         os.system(f"mv -f {bin_path}Clement-Lnrd-Mango-*/mango.py {bin_path}mango")
