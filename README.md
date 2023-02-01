@@ -5,7 +5,7 @@ Mango is an improved and skinned Epitech Banana coding style checker.
 ## 🔧 Installation
 
 ```bash
-wget https://raw.githubusercontent.com/Clement-Lnrd/Mango/main/mango.py -O $HOME/.local/bin/mango && chmod +x $HOME/.local/bin/mango
+mkdir -p $HOME/.local/bin/ && wget https://raw.githubusercontent.com/Clement-Lnrd/Mango/main/mango.py -O $HOME/.local/bin/mango && chmod +x $HOME/.local/bin/mango
 ```
 
 ## ⚙ Usage
