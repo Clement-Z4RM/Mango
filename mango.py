@@ -69,7 +69,7 @@ def update(args):
     if (args.update):
         os.system(f"wget https://api.github.com/repos/Clement-Lnrd/Mango/tarball/{version} -O {bin_path}Mango-{version}.tar.gz 2> /dev/null")
         os.system(f"tar -xzf {bin_path}Mango-{version}.tar.gz -C {bin_path}")
-        os.system(f"mv -f {bin_path}Clement-Lnrd-Mango-*/mango {bin_path}mango")
+        os.system(f"mv -f {bin_path}Clement-Lnrd-Mango-*/mango.py {bin_path}mango")
         os.system(f"chmod +x {bin_path}mango")
         os.system(f"rm -rf {bin_path}Mango-{version}.tar.gz {bin_path}Clement-Lnrd-Mango-*")
         exit()
