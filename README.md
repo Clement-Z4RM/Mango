@@ -19,6 +19,18 @@ For a detailed usage, type:
 mango -h, --help
 ```
 
+## 📋 Arguments
+
+`-Ee <error(s)>`; `-Eerrors <error(s)>`; `--exclude-errors <error(s)>`: exclude error(s) from **Mango** report
+<br/>
+`-Ef <file(s)>`; `-Efiles <file(s)>`; `--exclude-files <file(s)>`: exclude file(s)/folder(s) from **Mango** report
+<br/>
+`-w <time>`; `--watch <time>`: relaunch **Mango** every *time* seconds (warning, this will clear the terminal)
+<br/>
+`-v`; `--version`: print currently installed **Mango** version
+<br/>
+`-u`; `--update`: update **Mango** to newest version
+
 ## ➡ Examples
 
 With this C file:
@@ -78,12 +90,6 @@ Files must end with a line break.
 ✅ There isn't coding style error
 ```
 You can also exclude an entire folder (e.g. *mango --exclude-files src/*).
-
-<br/>
-
-*--exclude-errors* can be replaced by *-Ee*
-<br/>
-*--exclude-files* can be replaced by *-Ef*
 
 ## ➕ Contributing
 
