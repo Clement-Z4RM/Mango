@@ -30,7 +30,9 @@ int main()
     printf("Hello world!");
 }
 ```
-‎
+
+<br/>
+
 ```bash
 >$ mango
 ```
@@ -49,7 +51,9 @@ Files must end with a line break.
 
 1 Major | 1 Minor | 1 Info
 ```
-‎
+
+<br/>
+
 ```bash
 >$ mango --exclude-errors C-F6
 ```
@@ -64,13 +68,20 @@ Files must end with a line break.
 
 0 Major | 1 Minor | 1 Info
 ```
-‎
+
+<br/>
+
 ```bash
 >$ mango --exclude-files main.c
 ```
 ```
 ✅ There isn't coding style error
 ```
+You can also exclude an entire folder (e.g. *mango --exclude-files src/*).
+
+*--exclude-errors* can be replaced by *-Ee*
+<br/>
+*--exclude-files* can be replaced by *-Ef*
 
 ## ➕ Contributing
 
