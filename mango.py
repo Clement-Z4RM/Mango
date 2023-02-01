@@ -59,7 +59,6 @@ def set_arguments():
 
 def download_coding_style():
     print("Downloading coding-style...\n")
-    os.system(f"mkdir -p {bin_path}")
     os.system(f"wget https://raw.githubusercontent.com/Epitech/coding-style-checker/main/coding-style.sh -O {bin_path}coding-style 2> /dev/null")
     os.system(f"chmod +x {bin_path}coding-style")
 
@@ -68,18 +67,17 @@ def update(args):
     if (response):
         version = response.json()["name"]
     if (args.update):
-        os.system(f"mkdir -p {bin_path}")
         os.system(f"wget https://api.github.com/repos/Clement-Lnrd/Mango/tarball/{version} -O {bin_path}Mango-{version}.tar.gz 2> /dev/null")
         os.system(f"tar -xzf {bin_path}Mango-{version}.tar.gz -C {bin_path}")
         os.system(f"mv -f {bin_path}Clement-Lnrd-Mango-*/mango.py {bin_path}mango")
         os.system(f"chmod +x {bin_path}mango")
         os.system(f"rm -rf {bin_path}Mango-{version}.tar.gz {bin_path}Clement-Lnrd-Mango-*")
         exit()
-    if (response and version != "v1.1.0"):
+    if (response and version != "v1.1.1"):
         print("New version of Mango available. You can update it doing \"\033[3mmango -u, --update\033[0m\".\n")
 
 def print_version():
-    print("Mango v1.1.0")
+    print("Mango v1.1.1")
     exit()
 
 def get_exclude_files(args):
