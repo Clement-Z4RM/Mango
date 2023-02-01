@@ -79,6 +79,8 @@ Files must end with a line break.
 ```
 You can also exclude an entire folder (e.g. *mango --exclude-files src/*).
 
+<br/>
+
 *--exclude-errors* can be replaced by *-Ee*
 <br/>
 *--exclude-files* can be replaced by *-Ef*
