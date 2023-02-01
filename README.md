@@ -30,10 +30,11 @@ int main()
     printf("Hello world!");
 }
 ```
-‎ 
-```
+‎
+```bash
 >$ mango
-
+```
+```
 main.c:1: C-G1
 File header
 C files and every Makefile must always start with the standard header of the school.
@@ -48,10 +49,11 @@ Files must end with a line break.
 
 1 Major | 1 Minor | 1 Info
 ```
-
-```
+‎
+```bash
 >$ mango --exclude-errors C-F6
-
+```
+```
 main.c:1: C-G1
 File header
 C files and every Makefile must always start with the standard header of the school.
@@ -62,10 +64,11 @@ Files must end with a line break.
 
 0 Major | 1 Minor | 1 Info
 ```
-
-```
+‎
+```bash
 >$ mango --exclude-files main.c
-
+```
+```
 ✅ There isn't coding style error
 ```
 
