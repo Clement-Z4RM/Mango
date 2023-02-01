@@ -146,10 +146,10 @@ def mango(exclude_files, exclude_errors):
         print("✅ There isn't coding style error")
 
 def main():
+    args = set_arguments()
     if (os.geteuid() != 0):
         execute_as_sudo()
     os.environ["PATH"] += (os.pathsep + bin_path)
-    args = set_arguments()
     update(args)
     if (args.version):
         print_version()
