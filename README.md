@@ -4,6 +4,7 @@ Mango is an improved and skinned Epitech Banana coding style checker.
 
 ## 🔧 Installation
 
+You need to have [**Docker**](https://www.docker.com/) installed: [install docker](https://docs.docker.com/engine/install/).
 ```bash
 mkdir -p $HOME/.local/bin/ && wget https://raw.githubusercontent.com/Clement-Lnrd/Mango/main/mango.py -O $HOME/.local/bin/mango && chmod +x $HOME/.local/bin/mango
 ```
@@ -18,6 +19,12 @@ For a detailed usage, type:
 ```bash
 mango -h, --help
 ```
+
+If you want to excludes the files contained in your *.gitignore*, type:
+```bash
+mango -Ef $(cat .gitignore)
+```
+<sub>"-Ef" can be replaced by "-Efiles" or "--exclude-files"</sub>
 
 ## 📋 Arguments
 
