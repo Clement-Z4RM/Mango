@@ -8,6 +8,7 @@ You need to have [**Docker**](https://www.docker.com/) installed: [install docke
 ```bash
 mkdir -p $HOME/.local/bin/ && wget https://raw.githubusercontent.com/Clement-Lnrd/Mango/main/mango.py -O $HOME/.local/bin/mango && chmod +x $HOME/.local/bin/mango
 ```
+If *mango* is not found as command, add *$HOME/.local/bin/* to your *PATH*.
 
 ## ⚙ Usage
 
