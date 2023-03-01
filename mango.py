@@ -8,63 +8,63 @@ import subprocess
 import requests
 import time
 
-mango_ascii = "                                                      [38;5;130m([38;5;094m#%\n"\
-"                               [38;5;166m(((((((((((((######   [38;5;m([38;5;130m#[38;5;094m%\n"\
-"                           [38;5;202m(((((((((([38;5;166m((((((((((######[38;5;058m%%%%%%\n"\
-"                        [38;5;208m(//((((([38;5;202m((((((((([38;5;166m((((((((##[38;5;064m##%[38;5;058m%%%%%%%%%\n"\
-"                      [38;5;208m/////////////(([38;5;202m(((((([38;5;166m((((((([38;5;106m##[38;5;064m##%[38;5;058m%%%%%%%%%%\n"\
-"                    [38;5;208m//////////////////((([38;5;202m((([38;5;166m(((((([38;5;106m((##[38;5;064m##%[38;5;058m%%%%%%%%%\n"\
-"                  [38;5;m%[38;5;214m/////*[38;5;215m*****[38;5;214m/[38;5;208m//////////(([38;5;202m([38;5;166m((((([38;5;142m([38;5;106m(((##[38;5;064m##%[38;5;058m%%%%%%%%%\n"\
-"                 [38;5;214m///*[38;5;215m*****,****[38;5;214m*/[38;5;208m/////////(([38;5;172m(([38;5;166m((([38;5;172m([38;5;106m((((##[38;5;064m##[38;5;058m%%%%%%%%%[38;5;m&\n"\
-"                [38;5;214m//**[38;5;215m**[38;5;221m,,[38;5;222m,,,[38;5;221m,[38;5;215m,***[38;5;214m//[38;5;208m/////////[38;5;172m((([38;5;166m(((([38;5;112m(([38;5;106m(((##[38;5;064m#%[38;5;058m%%%%%%%%[38;5;m%\n"\
-"               [38;5;214m/***[38;5;221m*,,[38;5;222m,,..,[38;5;221m,,[38;5;215m**[38;5;214m*////[38;5;208m//////[38;5;172m/(((([38;5;166m((([38;5;142m([38;5;112m([38;5;106m((((#[38;5;064m##%[38;5;058m%%%%%%%[38;5;m&\n"\
-"             [38;5;m%[38;5;214m**[38;5;220m*[38;5;220m*[38;5;221m*,,,[38;5;222m,,,,[38;5;221m,,*[38;5;215m*[38;5;214m**//////[38;5;208m////[38;5;172m/(((([38;5;166m(((([38;5;112m(([38;5;106m(((##[38;5;064m#%[38;5;058m%%%%%%%[38;5;m&\n"\
-"            [38;5;214m////[38;5;220m*[38;5;220m*[38;5;221m**,,,,,,**[38;5;214m**////////[38;5;208m//[38;5;172m//((((([38;5;166m(([38;5;130m(###[38;5;106m(((##[38;5;064m##[38;5;058m%%%%%%%[38;5;m%\n"\
-"          [38;5;m/[38;5;214m//////[38;5;220m*[38;5;220m*[38;5;220m*[38;5;221m*****[38;5;220m*[38;5;220m*[38;5;220m*[38;5;214m*////////[38;5;178m//[38;5;172m//(((((([38;5;166m([38;5;130m(#####[38;5;136m#[38;5;106m(##[38;5;064m##%[38;5;058m%%%%%%[38;5;m%\n"\
-"        [38;5;m%[38;5;178m///////[38;5;214m///******/////////[38;5;178m/////[38;5;172m/(((((([38;5;136m([38;5;130m(#######[38;5;094m#%[38;5;106m#[38;5;064m##%[38;5;058m%%%%%%%\n"\
-"       [38;5;178m////////////////[38;5;214m//////[38;5;178m/[38;5;214m/[38;5;178m///////[38;5;172m(((((([38;5;136m(([38;5;130m(######[38;5;094m#%%%%   [38;5;058m%%%%%%%[38;5;m&\n"\
-"     [38;5;m([38;5;142m(([38;5;178m(///////////////////////////[38;5;172m/((((([38;5;136m((([38;5;130m######[38;5;094m##%%%%          [38;5;058m%%\n"\
-"    [38;5;136m(([38;5;142m((((((((([38;5;178m(//////////////////[38;5;172m(((([38;5;136m((((([38;5;130m#####[38;5;094m###%%%%\n"\
-"    [38;5;136m((((((((([38;5;142m(((((([38;5;178m((((////(/([38;5;172m((((([38;5;136m((((((#[38;5;130m####[38;5;094m###%%%%\n"\
-"    [38;5;100m#######[38;5;136m(((((((((((((((((((((((((((##[38;5;130m###[38;5;094m####%%%\n"\
-"     [38;5;003m####[38;5;100m######[38;5;136m(((((((((((((((((((####[38;5;130m##[38;5;094m####%%[38;5;m#\n"\
-"      [38;5;m%[38;5;003m######[38;5;100m#####[38;5;136m####(((((#######[38;5;130m##[38;5;094m#####%\n"\
-"          [38;5;003m#######[38;5;100m######[38;5;136m#[3#[3#[3#[38;5;130m###[38;5;094m#####[38;5;m([0m\n\n"
+mango_ascii = "                                                      [48;5;130m [48;5;094m  [0m\n"\
+"                               [48;5;166m                      [48;5;m([48;5;130m [48;5;094m [0m\n"\
+"                           [48;5;202m          [48;5;166m                [48;5;058m      [0m\n"\
+"                        [48;5;208m        [48;5;202m         [48;5;166m          [48;5;064m   [48;5;058m         [0m\n"\
+"                      [48;5;208m               [48;5;202m      [48;5;166m       [48;5;106m  [48;5;064m   [48;5;058m          [0m\n"\
+"                    [48;5;208m                     [48;5;202m   [48;5;166m      [48;5;106m    [48;5;064m   [48;5;058m         [0m\n"\
+"                  [48;5;m%[48;5;214m      [48;5;215m     [48;5;214m [48;5;208m            [48;5;202m [48;5;166m     [48;5;142m [48;5;106m     [48;5;064m   [48;5;058m         [0m\n"\
+"                 [48;5;214m    [48;5;215m          [48;5;214m  [48;5;208m           [48;5;172m  [48;5;166m   [48;5;172m [48;5;106m      [48;5;064m  [48;5;058m         [48;5;m&[0m\n"\
+"                [48;5;214m    [48;5;215m  [48;5;221m  [48;5;222m   [48;5;221m [48;5;215m    [48;5;214m  [48;5;208m         [48;5;172m   [48;5;166m    [48;5;112m  [48;5;106m     [48;5;064m  [48;5;058m        [48;5;m%[0m\n"\
+"               [48;5;214m    [48;5;221m   [48;5;222m     [48;5;221m  [48;5;215m  [48;5;214m     [48;5;208m      [48;5;172m     [48;5;166m   [48;5;142m [48;5;112m [48;5;106m     [48;5;064m   [48;5;058m       [48;5;m&[0m\n"\
+"             [48;5;m%[48;5;214m  [48;5;220m [48;5;220m [48;5;221m    [48;5;222m    [48;5;221m   [48;5;215m [48;5;214m        [48;5;208m    [48;5;172m     [48;5;166m    [48;5;112m  [48;5;106m     [48;5;064m  [48;5;058m       [48;5;m&[0m\n"\
+"            [48;5;214m    [48;5;220m [48;5;220m [48;5;221m          [48;5;214m          [48;5;208m  [48;5;172m       [48;5;166m  [48;5;130m    [48;5;106m     [48;5;064m  [48;5;058m       [48;5;m%[0m\n"\
+"          [48;5;m/[48;5;214m      [48;5;220m [48;5;220m [48;5;220m [48;5;221m     [48;5;220m [48;5;220m [48;5;220m [48;5;214m         [48;5;178m  [48;5;172m        [48;5;166m [48;5;130m      [48;5;136m [48;5;106m   [48;5;064m   [48;5;058m      [48;5;m%[0m\n"\
+"        [48;5;m%[48;5;178m       [48;5;214m                  [48;5;178m     [48;5;172m       [48;5;136m [48;5;130m        [48;5;094m  [48;5;106m [48;5;064m   [48;5;058m       [0m\n"\
+"       [48;5;178m                [48;5;214m      [48;5;178m [48;5;214m [48;5;178m       [48;5;172m      [48;5;136m  [48;5;130m       [48;5;094m        [48;5;058m       [48;5;m&[0m\n"\
+"     [48;5;m([48;5;142m  [48;5;178m                            [48;5;172m      [48;5;136m   [48;5;130m      [48;5;094m                [48;5;058m  [0m\n"\
+"    [48;5;136m  [48;5;142m         [48;5;178m                   [48;5;172m    [48;5;136m     [48;5;130m     [48;5;094m       [0m\n"\
+"    [48;5;136m         [48;5;142m      [48;5;178m           [48;5;172m     [48;5;136m       [48;5;130m    [48;5;094m       [0m\n"\
+"    [48;5;100m       [48;5;136m                             [48;5;130m   [48;5;094m       [0m\n"\
+"     [48;5;003m    [48;5;100m      [48;5;136m                       [48;5;130m  [48;5;094m      [48;5;m#[0m\n"\
+"      [48;5;m%[48;5;003m      [48;5;100m     [48;5;136m                [48;5;130m  [48;5;094m      [0m\n"\
+"          [48;5;003m       [48;5;100m      [48;5;136m [3 [3 [3 [48;5;130m   [48;5;094m     [48;5;m([0m\n\n"
 
 types = [" INFO", " MINOR", " MAJOR"]
 
-colors = ["\033[36m", "\033[33m", "\033[31m"]
+colors = ["[36m", "[33m", "[31m"]
 
 rules = ["C-O1", "C-O3", "C-O4", "C-G1", "C-G2", "C-G3", "C-G4", "C-G5", "C-G6", "C-G7", "C-G8", "C-F2", "C-F3", "C-F4", "C-F5", "C-F6", "C-F8", "C-F9", "C-L2", "C-L3", "C-L4", "C-V1", "C-C1", "C-C3", "C-H1", "C-H2", "C-A3"]
 
 descriptions = [
-    ["Contents of the repository\033[0m", "The repository must not contain compiled, temporary or unnecessary files."],
-    ["File coherence\033[0m", "A source file mustn't contain more than 5 functions."],
-    ["Naming files and folders\033[0m", "All files names and folders must be in English, according the \033[3msnake_case\033[0m convention."],
-    ["File header\033[0m", "C files and every Makefile must always start with the standard header of the school."],
-    ["Separation of functions\033[0m", "Inside a source file, implementations of functions must be separated by one and only one empty line."],
-    ["Indentation of reprocessor directives\033[0m", "The preprocessor directives must be indented according to the level of indirection."],
-    ["Global variables\033[0m", "Global variables must be avoided as much as possible. Only global constants should be used."],
-    ["\033[3minclude\033[0m", "\033[3minclude\033[0m directive must only include C header files."],
-    ["Line endings\033[0m", "Line endings must be done in UNIX style (with \033[3m\\n\033[0m)."],
-    ["Trailing spaces\033[0m", "No trailing spaces must be present at the end of a line."],
-    ["Leading/trailing lines\033[0m", "No leading empty lines must be present. No more than 1 trailing empty line must be present."],
-    ["Naming functions\033[0m", "The name of a function must define the task it executes and must contain a verb. All function names must be in English, according to the \033[3msnake_case\033[0m convention."],
-    ["Number of columns\033[0m", "The length of a line must not exceed 80 columns."],
-    ["Number of lines\033[0m", "The body of a function should be as short as possible, and must not exceed 20 lines."],
-    ["Number of parameters\033[0m", "A function must not have more than 4 parameters."],
-    ["Functions without parameters\033[0m", "A function taking no parameters must take void as a parameter in the function declaration."],
-    ["Comments inside a function\033[0m", "There must be no comment within a function."],
-    ["Nested functions\033[0m", "Nested functions are not allowed."],
-    ["Indentation\033[0m", "Each indentation level must be done by using 4 spaces. No tabulations may be used for indentation."],
-    ["Spaces\033[0m", "When using a space as a separator, one and only one space character must be used."],
-    ["Curly brackets\033[0m", "Opening curly brackets must be at the end of the line, after the content it precedes, except for functions definitions where they must be placed alone on their line. Closing curly brackets must be alone on their line, except in the case of \033[3melse\033[0m/\033[3melse if\033[0m control structures, \033[3menum\033[0m declarations, or structure declarations."],
-    ["Naming identifiers\033[0m", "All identifier names must be in English, according to the \033[3msnake_case\033[0m convention. The type names defined with \033[3mtypedef\033[0m must end with \033[3m_t\033[0m. The names of macros and global constants and the content of enums must be written in \033[3mUPPER_SNAKE_CASE\033[0m."],
-    ["Conditional branching\033[0m", "A conditionnal block must not contain more than 3 branches."],
-    ["\033[3mgoto\033[0m", "Using the \033[3mgoto\033[0m keyword if forbidden."],
-    ["Content\033[0m", "Header files must only contain \033[1mfunctions prototypes\033[0m, \033[1mtypes declarations\033[0m, \033[1mglobal variable/constant declarations\033[0m, \033[1mmacros\033[0m, \033[1mstatic inline functions\033[0m. All these elements must only be found in header files, and thus not in source files."],
-    ["Include guard\033[0m", "Headers must be protected from double inclusion."],
-    ["Line break at the end of file\033[0m", "Files must end with a line break."]
+    ["Contents of the repository[0m", "The repository must not contain compiled, temporary or unnecessary files."],
+    ["File coherence[0m", "A source file mustn't contain more than 5 functions."],
+    ["Naming files and folders[0m", "All files names and folders must be in English, according the [3msnake_case[0m convention."],
+    ["File header[0m", "C files and every Makefile must always start with the standard header of the school."],
+    ["Separation of functions[0m", "Inside a source file, implementations of functions must be separated by one and only one empty line."],
+    ["Indentation of reprocessor directives[0m", "The preprocessor directives must be indented according to the level of indirection."],
+    ["Global variables[0m", "Global variables must be avoided as much as possible. Only global constants should be used."],
+    ["[3minclude[0m", "[3minclude[0m directive must only include C header files."],
+    ["Line endings[0m", "Line endings must be done in UNIX style (with [3m\\n[0m)."],
+    ["Trailing spaces[0m", "No trailing spaces must be present at the end of a line."],
+    ["Leading/trailing lines[0m", "No leading empty lines must be present. No more than 1 trailing empty line must be present."],
+    ["Naming functions[0m", "The name of a function must define the task it executes and must contain a verb. All function names must be in English, according to the [3msnake_case[0m convention."],
+    ["Number of columns[0m", "The length of a line must not exceed 80 columns."],
+    ["Number of lines[0m", "The body of a function should be as short as possible, and must not exceed 20 lines."],
+    ["Number of parameters[0m", "A function must not have more than 4 parameters."],
+    ["Functions without parameters[0m", "A function taking no parameters must take void as a parameter in the function declaration."],
+    ["Comments inside a function[0m", "There must be no comment within a function."],
+    ["Nested functions[0m", "Nested functions are not allowed."],
+    ["Indentation[0m", "Each indentation level must be done by using 4 spaces. No tabulations may be used for indentation."],
+    ["Spaces[0m", "When using a space as a separator, one and only one space character must be used."],
+    ["Curly brackets[0m", "Opening curly brackets must be at the end of the line, after the content it precedes, except for functions definitions where they must be placed alone on their line. Closing curly brackets must be alone on their line, except in the case of [3melse[0m/[3melse if[0m control structures, [3menum[0m declarations, or structure declarations."],
+    ["Naming identifiers[0m", "All identifier names must be in English, according to the [3msnake_case[0m convention. The type names defined with [3mtypedef[0m must end with [3m_t[0m. The names of macros and global constants and the content of enums must be written in [3mUPPER_SNAKE_CASE[0m."],
+    ["Conditional branching[0m", "A conditionnal block must not contain more than 3 branches."],
+    ["[3mgoto[0m", "Using the [3mgoto[0m keyword if forbidden."],
+    ["Content[0m", "Header files must only contain [1mfunctions prototypes[0m, [1mtypes declarations[0m, [1mglobal variable/constant declarations[0m, [1mmacros[0m, [1mstatic inline functions[0m. All these elements must only be found in header files, and thus not in source files."],
+    ["Include guard[0m", "Headers must be protected from double inclusion."],
+    ["Line break at the end of file[0m", "Files must end with a line break."]
 ]
 
 bin_path = (f"/home/{os.getenv('SUDO_USER')}/.local/bin/")
@@ -98,11 +98,11 @@ def update(args):
         os.system(f"chmod +x {bin_path}mango")
         os.system(f"rm -rf {bin_path}Mango-{version}.tar.gz {bin_path}Clement-Lnrd-Mango-*")
         exit()
-    if (response and version != "v1.5.0"):
-        print("New version of Mango available. You can update it doing \"\033[3mmango -u, --update\033[0m\".\n")
+    if (response and version != "v1.6.0"):
+        print("New version of Mango available. You can update it doing \"[3mmango -u, --update[0m\".\n")
 
 def print_version():
-    print("Mango v1.5.0")
+    print("Mango v1.6.0")
     exit()
 
 def get_exclude_files(args):
@@ -139,8 +139,8 @@ def coding_style():
     return out
 
 def print_error(line, index):
-    color = ("\033[0m" + colors[types.index(line[2])])
-    print(f"{color}\033[1m{line[0]}:{line[1]}: {line[3]}{color}\n{descriptions[index][0]}\n{descriptions[index][1]}\n")
+    color = ("[0m" + colors[types.index(line[2])])
+    print(f"{color}[1m{line[0]}:{line[1]}: {line[3]}{color}\n{descriptions[index][0]}\n{descriptions[index][1]}\n")
 
 def mango(exclude_files, exclude_errors, watch):
     out = coding_style()
@@ -168,7 +168,7 @@ def mango(exclude_files, exclude_errors, watch):
                 err_nb[2] += 1
         print_error(line, index)
     if (err_nb[2] > 0 or err_nb[1] > 0 or err_nb[0] > 0):
-        print(f"\033[1;31m{err_nb[2]} Major\033[0m | \033[1;33m{err_nb[1]} Minor\033[0m | \033[1;36m{err_nb[0]} Info\033[0m")
+        print(f"[1;31m{err_nb[2]} Major[0m | [1;33m{err_nb[1]} Minor[0m | [1;36m{err_nb[0]} Info[0m")
     else:
         print(f"{mango_ascii}    ✅ There is no coding style error")
 
@@ -177,7 +177,10 @@ def main():
     if (os.geteuid() != 0):
         execute_as_sudo()
     os.environ["PATH"] += (os.pathsep + bin_path)
-    update(args)
+    try:
+        update(args)
+    except:
+        sys.stderr.write("Cannot check for update, please verify your internet connection.\n\n")
     if (args.version):
         print_version()
     if (which("coding-style") is None):
