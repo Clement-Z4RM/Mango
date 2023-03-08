@@ -8,6 +8,8 @@ import subprocess
 import requests
 import time
 
+version = "v1.6.1"
+
 mango_ascii = "                                                      [48;5;130m [48;5;094m  [0m\n"\
 "                               [48;5;166m                       [48;5;130m [48;5;094m [0m\n"\
 "                           [48;5;202m          [48;5;166m                [48;5;058m      [0m\n"\
@@ -98,11 +100,11 @@ def update(args):
         os.system(f"chmod +x {bin_path}mango")
         os.system(f"rm -rf {bin_path}Mango-{version}.tar.gz {bin_path}Clement-Lnrd-Mango-*")
         exit()
-    if (response and version != "v1.6.0"):
+    if (response and version != version):
         print("New version of Mango available. You can update it doing \"[3mmango -u, --update[0m\".\n")
 
 def print_version():
-    print("Mango v1.6.0")
+    print(f"Mango {version}")
     exit()
 
 def get_exclude_files(args):
