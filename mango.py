@@ -33,6 +33,31 @@ mango_ascii = "                                                      [48;5;130m
 "       [48;5;003m      [48;5;100m     [48;5;136m                [48;5;130m  [48;5;094m      [0m\n"\
 "          [48;5;003m       [48;5;100m      [48;5;136m [3 [3 [3 [48;5;130m   [48;5;094m      [0m\n\n"
 
+mango_tty = "    Sad TTY not handle well colors :(\n"\
+"                                                        %\n"\
+"                                                      (#%\n"\
+"                               (((((((((((((######   (#%\n"\
+"                           ((((((((((((((((((((######%%%%%%\n"\
+"                        (//((((((((((((((((((((((####%%%%%%%%%%\n"\
+"                      /////////////(((((((((((((((####%%%%%%%%%%%\n"\
+"                    //////////////////((((((((((((((####%%%%%%%%%%\n"\
+"                  %/////******///////////((((((((((((####%%%%%%%%%%\n"\
+"                 ///******,*****//////////((((((((((((####%%%%%%%%%&\n"\
+"                //****,,,,,,,***///////////((((((((((((###%%%%%%%%%%\n"\
+"               /****,,,,..,,,***///////////(((((((((((((###%%%%%%%%&\n"\
+"             %*****,,,,,,,,,****///////////(((((((((((((###%%%%%%%%&\n"\
+"            ////****,,,,,,****////////////((((((((###(((####%%%%%%%%\n"\
+"          ///////************////////////((((((((######(####%%%%%%%%\n"\
+"        %//////////******///////////////((((((((########%###%%%%%%%%\n"\
+"       ///////////////////////////////(((((((((#######%%%%   %%%%%%%&\n"\
+"     ((((////////////////////////////((((((((########%%%%          %%\n"\
+"    ((((((((((((//////////////////(((((((((########%%%%\n"\
+"    (((((((((((((((((((////(/((((((((((((########%%%%\n"\
+"    #######(((((((((((((((((((((((((((#########%%%\n"\
+"     ##########(((((((((((((((((((##########%%#\n"\
+"      %###############(((((##############%\n"\
+"          #########################(\n\n"
+
 types = [" INFO", " MINOR", " MAJOR"]
 
 colors = ["[36m", "[33m", "[31m"]
@@ -71,10 +96,6 @@ descriptions = [
 
 bin_path = (f"/home/{os.getenv('SUDO_USER')}/.local/bin/")
 
-def execute_as_sudo():
-    args = (['sudo'] + sys.argv + [os.environ])
-    os.execlpe('sudo', *args)
-
 def set_arguments():
     parser = argparse.ArgumentParser()
     parser.add_argument("-Ee", "-Eerrors", "--exclude-errors", nargs = '+', help = "Exclude coding style errors from report")
@@ -86,19 +107,19 @@ def set_arguments():
 
 def download_coding_style():
     print("Downloading coding-style...\n")
-    os.system(f"wget https://raw.githubusercontent.com/Epitech/coding-style-checker/main/coding-style.sh -O {bin_path}coding-style 2> /dev/null")
-    os.system(f"chmod +x {bin_path}coding-style")
+    os.system(f"sudo wget https://raw.githubusercontent.com/Epitech/coding-style-checker/main/coding-style.sh -O {bin_path}coding-style 2> /dev/null")
+    os.system(f"sudo chmod +x {bin_path}coding-style")
 
 def update(args):
     response = requests.get("https://api.github.com/repos/Clement-Lnrd/Mango/releases/latest")
     if (response):
         version = response.json()["name"]
     if (args.update):
-        os.system(f"wget https://api.github.com/repos/Clement-Lnrd/Mango/tarball/{version} -O {bin_path}Mango-{version}.tar.gz 2> /dev/null")
-        os.system(f"tar -xzf {bin_path}Mango-{version}.tar.gz -C {bin_path}")
-        os.system(f"mv -f {bin_path}Clement-Lnrd-Mango-*/mango.py {bin_path}mango")
-        os.system(f"chmod +x {bin_path}mango")
-        os.system(f"rm -rf {bin_path}Mango-{version}.tar.gz {bin_path}Clement-Lnrd-Mango-*")
+        os.system(f"sudo wget https://api.github.com/repos/Clement-Lnrd/Mango/tarball/{version} -O {bin_path}Mango-{version}.tar.gz 2> /dev/null")
+        os.system(f"sudo tar -xzf {bin_path}Mango-{version}.tar.gz -C {bin_path}")
+        os.system(f"sudo mv -f {bin_path}Clement-Lnrd-Mango-*/mango.py {bin_path}mango")
+        os.system(f"sudo chmod +x {bin_path}mango")
+        os.system(f"sudo rm -rf {bin_path}Mango-{version}.tar.gz {bin_path}Clement-Lnrd-Mango-*")
         exit()
     if (response and version != version):
         print("New version of Mango available. You can update it doing \"[3mmango -u, --update[0m\".\n")
@@ -133,11 +154,11 @@ def get_exclude_errors(args):
 
 def coding_style():
     os.system("coding-style . /tmp/ > /dev/null")
-    process = subprocess.Popen(["cat", "/tmp/coding-style-reports.log"], stdout = subprocess.PIPE)
+    process = subprocess.Popen(["sudo", "cat", "/tmp/coding-style-reports.log"], stdout = subprocess.PIPE)
     out, err = process.communicate()
     out = out.decode('utf-8')
     out = out.split('\n')
-    os.system("rm -f /tmp/coding-style-reports.log")
+    os.system("sudo rm -f /tmp/coding-style-reports.log")
     return out
 
 def print_error(line, index):
@@ -150,7 +171,10 @@ def mango(exclude_files, exclude_errors, watch):
         os.system("clear")
     err_nb = [0, 0, 0]
     if (not out):
-        print(f"{mango_ascii}    ✅ There is no coding style error")
+        if (not is_a_tty):
+            print(f"{mango_ascii}    ✅ There is no coding style error")
+        else:
+            print(f"{mango_tty}    but you have no coding style error :)")
         return
     for line in out:
         if (line == ''):
@@ -171,13 +195,13 @@ def mango(exclude_files, exclude_errors, watch):
         print_error(line, index)
     if (err_nb[2] > 0 or err_nb[1] > 0 or err_nb[0] > 0):
         print(f"[1;31m{err_nb[2]} Major[0m | [1;33m{err_nb[1]} Minor[0m | [1;36m{err_nb[0]} Info[0m")
-    else:
+    elif (not is_a_tty):
         print(f"{mango_ascii}    ✅ There is no coding style error")
+    else:
+        print(f"{mango_tty}    but you have no coding style error :)")
 
 def main():
     args = set_arguments()
-    if (os.geteuid() != 0):
-        execute_as_sudo()
     os.environ["PATH"] += (os.pathsep + bin_path)
     try:
         update(args)
@@ -200,4 +224,5 @@ def main():
         mango(get_exclude_files(args), get_exclude_errors(args), args.watch)
 
 if __name__ == "__main__":
+    is_a_tty = os.ttyname(1).split('/')[-1].startswith("tty")
     main()
