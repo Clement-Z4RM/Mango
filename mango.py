@@ -8,7 +8,15 @@ import subprocess
 import requests
 import time
 
-version = "v1.6.1"
+version = "v1.6.5"
+
+changelog = "\033[1m[1.6.5] - 2022-03-13\033[0m\n"\
+"--------------------------------------------------\n"\
+"✨ Special Stumper update\n\n"\
+"\033[1mAdded\033[0m\n"\
+" · Special Mango ASCII art without colors for TTY mode\n\n"\
+"\033[1mFixed\033[0m\n"\
+" · Separate check of update and update to avoid \"\033[3mCannot check for update\033[0m\" error message when updating"
 
 mango_ascii = "                                                      [48;5;130m [48;5;094m  [0m\n"\
 "                               [48;5;166m                       [48;5;130m [48;5;094m [0m\n"\
@@ -94,7 +102,7 @@ descriptions = [
     ["Line break at the end of file[0m", "Files must end with a line break."]
 ]
 
-bin_path = (f"/home/{os.getenv('SUDO_USER')}/.local/bin/")
+bin_path = (f"/home/{os.getenv('USER')}/.local/bin/")
 
 def set_arguments():
     parser = argparse.ArgumentParser()
@@ -110,17 +118,19 @@ def download_coding_style():
     os.system(f"sudo wget https://raw.githubusercontent.com/Epitech/coding-style-checker/main/coding-style.sh -O {bin_path}coding-style 2> /dev/null")
     os.system(f"sudo chmod +x {bin_path}coding-style")
 
-def update(args):
+def update():
+    os.system(f"sudo wget https://api.github.com/repos/Clement-Lnrd/Mango/tarball/{version} -O {bin_path}Mango-{version}.tar.gz 2> /dev/null")
+    os.system(f"sudo tar -xzf {bin_path}Mango-{version}.tar.gz -C {bin_path}")
+    os.system(f"sudo mv -f {bin_path}Clement-Lnrd-Mango-*/mango.py {bin_path}mango")
+    os.system(f"sudo chmod +x {bin_path}mango")
+    os.system(f"sudo rm -rf {bin_path}Mango-{version}.tar.gz {bin_path}Clement-Lnrd-Mango-*")
+    print(changelog)
+    exit()
+
+def check_for_update():
     response = requests.get("https://api.github.com/repos/Clement-Lnrd/Mango/releases/latest")
     if (response):
         version = response.json()["name"]
-    if (args.update):
-        os.system(f"sudo wget https://api.github.com/repos/Clement-Lnrd/Mango/tarball/{version} -O {bin_path}Mango-{version}.tar.gz 2> /dev/null")
-        os.system(f"sudo tar -xzf {bin_path}Mango-{version}.tar.gz -C {bin_path}")
-        os.system(f"sudo mv -f {bin_path}Clement-Lnrd-Mango-*/mango.py {bin_path}mango")
-        os.system(f"sudo chmod +x {bin_path}mango")
-        os.system(f"sudo rm -rf {bin_path}Mango-{version}.tar.gz {bin_path}Clement-Lnrd-Mango-*")
-        exit()
     if (response and version != version):
         print("New version of Mango available. You can update it doing \"[3mmango -u, --update[0m\".\n")
 
@@ -202,13 +212,15 @@ def mango(exclude_files, exclude_errors, watch):
 
 def main():
     args = set_arguments()
-    os.environ["PATH"] += (os.pathsep + bin_path)
-    try:
-        update(args)
-    except:
-        sys.stderr.write("Cannot check for update, please verify your internet connection.\n\n")
     if (args.version):
         print_version()
+    if (args.update):
+        update()
+    os.environ["PATH"] += (os.pathsep + bin_path)
+    try:
+        check_for_update()
+    except:
+        sys.stderr.write("Cannot check for update, please verify your internet connection.\n\n")
     if (which("coding-style") is None):
         download_coding_style()
     if (args.watch):
