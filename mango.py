@@ -130,8 +130,8 @@ def update():
 def check_for_update():
     response = requests.get("https://api.github.com/repos/Clement-Lnrd/Mango/releases/latest")
     if (response):
-        version = response.json()["name"]
-    if (response and version != version):
+        new_version = response.json()["name"]
+    if (response and new_version != version):
         print("New version of Mango available. You can update it doing \"[3mmango -u, --update[0m\".\n")
 
 def print_version():
