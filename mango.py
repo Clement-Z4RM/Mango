@@ -163,12 +163,12 @@ def get_exclude_errors(args):
     return exclude
 
 def coding_style():
+    os.system("sudo rm -f /tmp/coding-style-reports.log")
     os.system("coding-style . /tmp/ > /dev/null")
-    process = subprocess.Popen(["sudo", "cat", "/tmp/coding-style-reports.log"], stdout = subprocess.PIPE)
+    process = subprocess.Popen(["cat", "/tmp/coding-style-reports.log"], stdout = subprocess.PIPE)
     out, err = process.communicate()
     out = out.decode('utf-8')
     out = out.split('\n')
-    os.system("sudo rm -f /tmp/coding-style-reports.log")
     return out
 
 def print_error(line, index):
