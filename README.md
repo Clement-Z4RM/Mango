@@ -6,9 +6,8 @@ Mango is an improved and skinned Epitech Banana coding style checker.
 
 You need to have [**Docker**](https://www.docker.com/) installed: [install docker](https://docs.docker.com/engine/install/).
 ```bash
-mkdir -p $HOME/.local/bin/ && wget https://raw.githubusercontent.com/Clement-Lnrd/Mango/main/mango.py -O $HOME/.local/bin/mango && chmod +x $HOME/.local/bin/mango
+sudo wget https://raw.githubusercontent.com/Clement-Lnrd/Mango/main/mango.py -O /bin/mango && sudo chmod +x /bin/mango
 ```
-If *mango* is not found as command, add *$HOME/.local/bin/* to your *PATH*.
 
 ## ⚙ Usage
 
