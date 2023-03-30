@@ -1,6 +1,7 @@
 # 🥭 Mango
 
 Mango is an improved and skinned Epitech Banana coding style checker.
+
 I decline all responsibility if you have a coding style error not detected by Mango.
 
 ## 🔧 Installation
