@@ -104,11 +104,11 @@ def set_arguments():
 
 def download_coding_style():
     print("Downloading coding-style...\n")
-    system(f"sudo wget https://raw.githubusercontent.com/Clement-Lnrd/coding-style-checker/main/coding-style.sh -O /bin/coding-style 2> /dev/null && sudo chmod +x /bin/coding-style")
+    system(f"sudo wget https://raw.githubusercontent.com/Clement-Z4RM/coding-style-checker/main/coding-style.sh -O /bin/coding-style 2> /dev/null && sudo chmod +x /bin/coding-style")
 
 def check_for_update(args):
     try:
-        response = get("https://api.github.com/repos/Clement-Lnrd/Mango/releases/latest")
+        response = get("https://api.github.com/repos/Clement-Z4RM/Mango/releases/latest")
         if (response):
             new_version = response.json()["name"]
         if (not args.update and new_version != version):
@@ -120,7 +120,7 @@ def check_for_update(args):
             print("Cannot check for update, please verify your internet connection.\n", file=stderr)
 
 def update():
-    system("sudo wget https://raw.githubusercontent.com/Clement-Lnrd/Mango/main/mango.py -O /bin/mango 2> /dev/null && sudo chmod +x /bin/mango")
+    system("sudo wget https://raw.githubusercontent.com/Clement-Z4RM/Mango/main/mango.py -O /bin/mango 2> /dev/null && sudo chmod +x /bin/mango")
     system("curl -s https://pastebin.com/raw/baCbaUqU")
     exit()
 

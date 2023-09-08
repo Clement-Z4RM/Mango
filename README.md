@@ -8,7 +8,7 @@ I decline all responsibility if you have a coding style error not detected by Ma
 
 You need to have [**Docker**](https://www.docker.com/) installed: [install docker](https://docs.docker.com/engine/install/).
 ```bash
-sudo wget https://raw.githubusercontent.com/Clement-Lnrd/Mango/main/mango.py -O /bin/mango && sudo chmod +x /bin/mango
+sudo wget https://raw.githubusercontent.com/Clement-Z4RM/Mango/main/mango.py -O /bin/mango && sudo chmod +x /bin/mango
 ```
 
 ## ⚙ Usage
