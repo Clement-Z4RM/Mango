@@ -9,6 +9,8 @@ from time import sleep
 
 version = "v1.7.0"
 
+coding_style_url = "https://raw.githubusercontent.com/Epitech/coding-style-checker/main/coding-style.sh"
+
 mango_ascii = """                                                      \33[48;5;130m \33[48;5;094m  \33[0m
                                \33[48;5;166m                   \33[0m   \33[48;5;166m \33[48;5;130m \33[48;5;094m \33[0m
                            \33[48;5;202m          \33[48;5;166m                \33[48;5;058m      \33[0m
@@ -61,36 +63,69 @@ types = [" INFO", " MINOR", " MAJOR"]
 
 colors = ["\33[36m", "\33[33m", "\33[31m"]
 
-rules = ["C-O1", "C-O3", "C-O4", "C-G1", "C-G2", "C-G3", "C-G4", "C-G5", "C-G6", "C-G7", "C-G8", "C-F2", "C-F3", "C-F4", "C-F5", "C-F6", "C-F8", "C-F9", "C-L2", "C-L3", "C-L4", "C-V1", "C-C1", "C-C3", "C-H1", "C-H2", "C-A3"]
+rules = ["C-O1", "C-O3", "C-O4", "C-G1", "C-G2", "C-G3", "C-G4", "C-G5", "C-G6", "C-G7", "C-G8",
+         "C-G10", "C-F2", "C-F3", "C-F4", "C-F5", "C-F6", "C-F7", "C-F8", "C-F9", "C-L1", "C-L2",
+         "C-L3", "C-L4", "C-L5", "C-L6", "C-V1", "C-V3", "C-C1", "C-C2", "C-C3", "C-H1", "C-H2",
+         "C-H3", "C-A3"]
 
 descriptions = [
-    ["Contents of the repository\33[0m", "The repository must not contain compiled, temporary or unnecessary files."],
-    ["File coherence\33[0m", "A source file mustn't contain more than 5 functions."],
-    ["Naming files and folders\33[0m", "All files names and folders must be in English, according the \33[3msnake_case\33[0m convention."],
-    ["File header\33[0m", "C files and every Makefile must always start with the standard header of the school."],
-    ["Separation of functions\33[0m", "Inside a source file, implementations of functions must be separated by one and only one empty line."],
-    ["Indentation of reprocessor directives\33[0m", "The preprocessor directives must be indented according to the level of indirection."],
-    ["Global variables\33[0m", "Global variables must be avoided as much as possible. Only global constants should be used."],
-    ["\33[3minclude\33[0m", "\33[3minclude\33[0m directive must only include C header files."],
-    ["Line endings\33[0m", "Line endings must be done in UNIX style (with \33[3m\\n\33[0m)."],
-    ["Trailing spaces\33[0m", "No trailing spaces must be present at the end of a line."],
-    ["Leading/trailing lines\33[0m", "No leading empty lines must be present. No more than 1 trailing empty line must be present."],
-    ["Naming functions\33[0m", "The name of a function must define the task it executes and must contain a verb. All function names must be in English, according to the \33[3msnake_case\33[0m convention."],
-    ["Number of columns\33[0m", "The length of a line must not exceed 80 columns."],
-    ["Number of lines\33[0m", "The body of a function should be as short as possible, and must not exceed 20 lines."],
-    ["Number of parameters\33[0m", "A function must not have more than 4 parameters."],
-    ["Functions without parameters\33[0m", "A function taking no parameters must take void as a parameter in the function declaration."],
-    ["Comments inside a function\33[0m", "There must be no comment within a function."],
-    ["Nested functions\33[0m", "Nested functions are not allowed."],
-    ["Indentation\33[0m", "Each indentation level must be done by using 4 spaces. No tabulations may be used for indentation."],
-    ["Spaces\33[0m", "When using a space as a separator, one and only one space character must be used."],
-    ["Curly brackets\33[0m", "Opening curly brackets must be at the end of the line, after the content it precedes, except for functions definitions where they must be placed alone on their line. Closing curly brackets must be alone on their line, except in the case of \33[3melse\33[0m/\33[3melse if\33[0m control structures, \33[3menum\33[0m declarations, or structure declarations."],
-    ["Naming identifiers\33[0m", "All identifier names must be in English, according to the \33[3msnake_case\33[0m convention. The type names defined with \33[3mtypedef\33[0m must end with \33[3m_t\33[0m. The names of macros and global constants and the content of enums must be written in \33[3mUPPER_SNAKE_CASE\33[0m."],
-    ["Conditional branching\33[0m", "A conditionnal block must not contain more than 3 branches."],
-    ["\33[3mgoto\33[0m", "Using the \33[3mgoto\33[0m keyword if forbidden."],
-    ["Content\33[0m", "Header files must only contain \33[1mfunctions prototypes\33[0m, \33[1mtypes declarations\33[0m, \33[1mglobal variable/constant declarations\33[0m, \33[1mmacros\33[0m, \33[1mstatic inline functions\33[0m. All these elements must only be found in header files, and thus not in source files."],
-    ["Include guard\33[0m", "Headers must be protected from double inclusion."],
-    ["Line break at the end of file\33[0m", "Files must end with a line break."]
+    ["Contents of the repository",
+     "The repository must not contain compiled, temporary or unnecessary files."],
+    ["File coherence",
+     "A source file mustn't contain more than 10 functions (including at most 5 non-static functions)."],
+    ["Naming files and folders",
+     "All files names and folders must be in English, according the \33[3msnake_case\33[0m convention."],
+    ["File header",
+     "C files and every Makefile must always start with the standard header of the school."],
+    ["Separation of functions",
+     "Inside a source file, implementations of functions must be separated by one and only one empty line."],
+    ["Indentation of reprocessor directives",
+     "The preprocessor directives must be indented according to the level of indirection."],
+    ["Global variables",
+     "Global variables must be avoided as much as possible. Only global constants should be used."],
+    ["\33[3minclude", "\33[3minclude\33[0m directive must only include C header files."],
+    ["Line endings", "Line endings must be done in UNIX style (with \33[3m\\n\33[0m)."],
+    ["Trailing spaces", "No trailing spaces must be present at the end of a line."],
+    ["Leading/trailing lines",
+     "No leading empty lines must be present. No more than 1 trailing empty line must be present."],
+    ["Inline assembly",  # Celui qui a cette erreur s'est perdu MDR
+     "Inline assembly must never be used. Programming in C must be done... in C."],
+    ["Naming functions",
+     "The name of a function must define the task it executes and must contain a verb. All function names must be in English, according to the \33[3msnake_case\33[0m convention."],
+    ["Number of columns", "The length of a line must not exceed 80 columns."],
+    ["Number of lines",
+     "The body of a function should be as short as possible, and must not exceed 20 lines."],
+    ["Number of parameters", "A function must not have more than 4 parameters."],
+    ["Functions without parameters",
+     "A function taking no parameters must take void as a parameter in the function declaration."],
+    ["Structures as parameters",
+     "Structures must be passed to functions using a pointer, not by copy."],
+    ["Comments inside a function", "There must be no comment within a function."],
+    ["Nested functions", "Nested functions are not allowed."],
+    ["Code line content", "A line must correspond to only one statement."],
+    ["Indentation",
+     "Each indentation level must be done by using 4 spaces. No tabulations may be used for indentation."],
+    ["Spaces",
+     "When using a space as a separator, one and only one space character must be used."],
+    ["Curly brackets",
+     "Opening curly brackets must be at the end of the line, after the content it precedes, except for functions definitions where they must be placed alone on their line. Closing curly brackets must be alone on their line, except in the case of \33[3melse\33[0m/\33[3melse if\33[0m control structures, \33[3menum\33[0m declarations, or structure declarations."],
+    ["Variable declarations",
+     "Variables must be declared at the beginning of the function. Only one variable must be declared per statement."],
+    ["Blank lines",
+     "A blank line must separate the variable declarations from the remainder of the function. No other blank lines must be present in the function."],
+    ["Naming identifiers",
+     "All identifier names must be in English, according to the \33[3msnake_case\33[0m convention. The type names defined with \33[3mtypedef\33[0m must end with \33[3m_t\33[0m. The names of macros and global constants and the content of enums must be written in \33[3mUPPER_SNAKE_CASE\33[0m."],
+    ["Pointers",
+     "The pointer symbol (*) must be attached to the associated variable, with no spaces in between. It must also be preceded by a space, except when it is itself preceded by another asterisk. When used in a cast, the asterisk must have a space on its left side, but not on its right side."],
+    ["Conditional branching", "A conditionnal block must not contain more than 3 branches."],
+    ["Ternary operators",
+     "The use of ternary operators is allowed as far as it is kept simple and readable, and if it does not obfuscate code. You must never use nested or chained ternary operators. You must always use the value produced by a ternary operator (by assigning it to a variable or returning it for example)."],
+    ["\33[3mgoto", "Using the \33[3mgoto\33[0m keyword if forbidden."],
+    ["Content",
+     "Header files must only contain \33[1mfunctions prototypes\33[0m, \33[1mtypes declarations\33[0m, \33[1mglobal variable/constant declarations\33[0m, \33[1mmacros\33[0m, \33[1mstatic inline functions\33[0m. All these elements must only be found in header files, and thus not in source files."],
+    ["Include guard", "Headers must be protected from double inclusion."],
+    ["Macros", "Macros must match only one statement, and fit on a single line."],
+    ["Line break at the end of file", "Files must end with a line break."]
 ]
 
 
@@ -111,7 +146,9 @@ def set_arguments():
 
 def download_coding_style():
     print("Downloading coding-style...\n")
-    system(f"sudo wget https://raw.githubusercontent.com/Clement-Z4RM/coding-style-checker/main/coding-style.sh -O /bin/coding-style 2> /dev/null && sudo chmod +x /bin/coding-style")
+    system(f"sudo wget {coding_style_url} -O /bin/coding-style 2> /dev/null")
+    system(f"sudo chmod +x /bin/coding-style")
+
 
 # def check_for_update(args):
 #     try:
