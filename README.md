@@ -15,7 +15,7 @@ You must have these packages installed - if you are on the [official Epitech dum
  - [**Python 3**](https://www.python.org) ([install python](https://www.python.org/downloads))
  - [**wget**](https://www.gnu.org/software/wget) or [**curl**](https://curl.se/) (optional)
 
-> ⚠ If you have already a *Mango* executable, in */bin*, it will be replaced by the new one.
+> ⚠ If you have already an executable named *mango* in */bin*, it will be replaced by this one.
 
 ### With wget
 ```bash
