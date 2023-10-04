@@ -14,13 +14,16 @@ You must have these packages installed - if you are on the [official Epitech dum
  - [**Docker**](https://www.docker.com) ([install docker](https://docs.docker.com/engine/install))
  - [**Python 3**](https://www.python.org) ([install python](https://www.python.org/downloads))
  - [**wget**](https://www.gnu.org/software/wget) or [**curl**](https://curl.se/) (optional)
+
+> ⚠ If you have already a *Mango* executable, in */bin*, it will be replaced by the new one.
+
 ### With wget
 ```bash
-sudo wget https://raw.githubusercontent.com/Clement-Z4RM/Mango/main/mango.py -O /bin/mango && sudo chmod +x /bin/mango
+sudo rm /bin/mango; sudo wget https://raw.githubusercontent.com/Clement-Z4RM/Mango/main/mango.py -O /bin/mango && sudo chmod +x /bin/mango
 ```
 ### With curl
 ```bash
-sudo curl https://raw.githubusercontent.com/Clement-Z4RM/Mango/main/mango.py -o /bin/mango && sudo chmod +x /bin/mango
+sudo rm /bin/mango; sudo curl https://raw.githubusercontent.com/Clement-Z4RM/Mango/main/mango.py -o /bin/mango && sudo chmod +x /bin/mango
 ```
 ### Manually
  - Copy the content of [mango.py](https://raw.githubusercontent.com/Clement-Z4RM/Mango/main/mango.py) in */bin/mango*
