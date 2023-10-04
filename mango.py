@@ -1,16 +1,17 @@
 #!/usr/bin/env python3
 
+import sys
 from sys import argv, stderr
 from os import ttyname, system, path, walk
 from argparse import ArgumentParser as parseArgs
 from shutil import which
 from time import sleep
 
-version = "v1.7.0"
+VERSION = "v1.7.0"
 
-coding_style_url = "https://raw.githubusercontent.com/Epitech/coding-style-checker/main/coding-style.sh"
+CODING_STYLE_URL = "https://raw.githubusercontent.com/Epitech/coding-style-checker/main/coding-style.sh"
 
-mango_ascii = """                                                      \33[48;5;130m \33[48;5;094m  \33[0m
+MANGO_ASCII = """                                                      \33[48;5;130m \33[48;5;094m  \33[0m
                                \33[48;5;166m                   \33[0m   \33[48;5;166m \33[48;5;130m \33[48;5;094m \33[0m
                            \33[48;5;202m          \33[48;5;166m                \33[48;5;058m      \33[0m
                         \33[48;5;208m        \33[48;5;202m         \33[48;5;166m          \33[48;5;064m   \33[48;5;058m         \33[0m
@@ -33,7 +34,7 @@ mango_ascii = """                                                      \33[48;5;
        \33[48;5;003m      \33[48;5;100m     \33[48;5;136m                \33[48;5;130m  \33[48;5;094m      \33[0m
           \33[48;5;003m       \33[48;5;100m      \33[48;5;136m \33[3 \33[3 \33[3 \33[48;5;130m   \33[48;5;094m      \33[0m\n\n"""
 
-mango_tty = "    Sad TTY not handle well colors :(\n" \
+MANGO_TTY = "    Sad TTY not handle well colors :(\n" \
             "                                                        %\n" \
             "                                                      (#%\n" \
             "                               (((((((((((((######   (#%\n" \
@@ -149,30 +150,30 @@ def download_coding_style():
     print("\33[3mcoding-style\33[0m command not found, ", end='')
     if download_command is None:
         print(" and neither \33[3wget\33[0m nor \33[3curl\33[0m were found on your computer,"
-              f" so please download \33[3mcoding-style\33[0m here: {coding_style_url}"
+              f" so please download \33[3mcoding-style\33[0m here: {CODING_STYLE_URL}"
               f" and/or add it to your path")
     print(", download it? [Y/n] ", end='')
 
     key = input().lower()
 
-    if key != '' and key != 'y' and key != 'yes' and key != 'o' and key != 'oui':
+    if key not in ('', 'y', 'yes', 'o', 'oui'):
         print("You must have the \33[3mcoding-style\33[0m command to be able to use \33[2mMango\33[0m")
-        exit(1)
+        sys.exit(1)
     print("Downloading coding-style...\n")
 
-    system(f"sudo {download_command} {coding_style_url}"
+    system(f"sudo {download_command} {CODING_STYLE_URL}"
            f" -{'O' if download_command == 'wget' else 'o'} /bin/coding-style 2> /dev/null")
-    system(f"sudo chmod +x /bin/coding-style")
+    system("sudo chmod +x /bin/coding-style")
 
 
 def update():
     print("Updating not working at the moment, it will be re-introduced in a future version.")
-    exit(0)
+    sys.exit(0)
 
 
 def print_version():
-    print(f"Mango {version}")
-    exit(0)
+    print(f"Mango {VERSION}")
+    sys.exit(0)
 
 
 def get_exclude_files(args):
@@ -181,7 +182,7 @@ def get_exclude_files(args):
         return exclude
     for file in args.exclude_files:
         if path.isdir(file):
-            for root, subdirs, files in walk(file):
+            for root, _subdirs, files in walk(file):
                 for filename in files:
                     file = path.join(root, filename)
                     file = path.abspath(file)
@@ -205,18 +206,18 @@ def coding_style():
     system("sudo rm -f /tmp/coding-style-reports.log")
     system("coding-style . /tmp/ > /dev/null")
     try:
-        with open("/tmp/coding-style-reports.log", "r") as file:
+        with open("/tmp/coding-style-reports.log", "r", encoding="utf-8") as file:
             out = file.read()
             file.close()
     except:
         print(f"{argv[0]}: Cannot open log file.", file=stderr)
-        exit(1)
+        sys.exit(1)
     out = out.split('\n')
     return out
 
 
 def print_error(line, index):
-    color = ("\33[0m" + colors[types.index(line[2])])
+    color = f"\33[0m{colors[types.index(line[2])]}"
     print(f"{color}\33[1m{line[0]}", end='')
     if int(line[1]) > 1:
         print(f" at line {line[1]}", end='')
@@ -233,11 +234,11 @@ def print_errors_number(err_nb, is_a_tty):
             print(f" | \33[1;37m{err_nb[4]} excluded\33[0m", end='')
         print()
     elif not is_a_tty:
-        print(f"{mango_ascii}    ✅ There is no coding style error")
+        print(f"{MANGO_ASCII}    ✅ There is no coding style error")
         if err_nb[4] > 0:
             print(f"\nBe careful, you still have {err_nb[4]} excluded errors")
     else:
-        print(f"{mango_tty}    but you have no coding style error :)")
+        print(f"{MANGO_TTY}    but you have no coding style error :)")
         if err_nb[4] > 0:
             print(f"\nBe careful, you still have {err_nb[4]} excluded errors")
 
@@ -249,9 +250,9 @@ def mango(exclude_files, exclude_errors):
 
     if not out:
         if not is_a_tty:
-            print(f"{mango_ascii}    ✅ There is no coding style error")
+            print(f"{MANGO_ASCII}    ✅ There is no coding style error")
         else:
-            print(f"{mango_tty}    but you have no coding style error :)")
+            print(f"{MANGO_TTY}    but you have no coding style error :)")
         return
     for line in out:
         backup_line = line
@@ -301,9 +302,9 @@ def main():
                 mango(exclude_files, exclude_errors)
                 sleep(sleep_duration)
             except KeyboardInterrupt:
-                exit(0)
+                sys.exit(0)
             except:
-                exit(1)
+                sys.exit(1)
     else:
         mango(exclude_files, exclude_errors)
 
