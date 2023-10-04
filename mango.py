@@ -159,10 +159,10 @@ def download_coding_style():
     if key not in ('', 'y', 'yes', 'o', 'oui'):
         print("You must have the \33[3mcoding-style\33[0m command to be able to use \33[1mMango\33[0m")
         sys.exit(1)
-    print("Downloading \33[3mcoding-style\33[0m...\n")
+    print("Downloading \33[3mcoding-style\33[0m...")
 
     system(f"sudo {download_command} {CODING_STYLE_URL}"
-           f" -{'O' if download_command == 'wget' else 'o'} /bin/coding-style 2> /dev/null")
+           f" -{'O' if 'wget' in download_command  else 'o'} /bin/coding-style 2> /dev/null")
     system("sudo chmod +x /bin/coding-style")
     print("\33[3mcoding-style\33[0m downloaded\n")
 
