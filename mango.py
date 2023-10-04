@@ -7,7 +7,7 @@ from argparse import ArgumentParser as parseArgs
 from shutil import which
 from time import sleep
 
-VERSION = "v1.7.0"
+VERSION = "v1.8.0"
 
 CODING_STYLE_URL = "https://raw.githubusercontent.com/Epitech/coding-style-checker/main/coding-style.sh"
 
@@ -59,9 +59,9 @@ MANGO_TTY = "    Sad TTY not handle well colors :(\n" \
             "      %###############(((((##############%\n" \
             "          #########################(\n\n"
 
-types = [" INFO", " MINOR", " MAJOR"]
+types = [" INFO", " MINOR", " MAJOR", " FATAL"]
 
-colors = ["\33[36m", "\33[33m", "\33[31m"]
+colors = ["\33[36m", "\33[33m", "\33[31m", "\33[31m"]
 
 rules = ["C-O1", "C-O3", "C-O4", "C-G1", "C-G2", "C-G3", "C-G4", "C-G5", "C-G6", "C-G7", "C-G8",
          "C-G10", "C-F2", "C-F3", "C-F4", "C-F5", "C-F6", "C-F7", "C-F8", "C-F9", "C-L1", "C-L2",
@@ -226,27 +226,30 @@ def print_error(line, index):
 
 
 def print_errors_number(err_nb, is_a_tty):
-    if err_nb[2] > 0 or err_nb[1] > 0 or err_nb[0] or err_nb[3] > 0:
+    if err_nb[3] or err_nb[2] > 0 or err_nb[1] > 0 or err_nb[0] or err_nb[4] > 0:
+        if err_nb[3]:
+            print(f"\33[1;31m{err_nb[3]} Fatal\33[0m | ", end='')
         print(f"\33[1;31m{err_nb[2]} Major\33[0m | \33[1;33m{err_nb[1]} Minor\33[0m | \33[1;36m{err_nb[0]} Info\33[0m",
               end='')
-        if err_nb[3] > 0:
-            print(f" | \33[1;37m{err_nb[3]} Unknown\33[0m", end='')
         if err_nb[4] > 0:
-            print(f" | \33[1;37m{err_nb[4]} excluded\33[0m", end='')
+            print(f" | \33[1;37m{err_nb[4]} Unknown\33[0m", end='')
+        if err_nb[5] > 0:
+            print(f" | \33[1;37m{err_nb[5]} excluded\33[0m", end='')
         print()
     elif not is_a_tty:
         print(f"{MANGO_ASCII}    ✅ There is no coding style error")
-        if err_nb[4] > 0:
-            print(f"\nBe careful, you still have {err_nb[4]} excluded errors")
+        if err_nb[5] > 0:
+            print(f"\nBe careful, you still have {err_nb[5]} excluded errors")
     else:
         print(f"{MANGO_TTY}    but you have no coding style error :)")
-        if err_nb[4] > 0:
-            print(f"\nBe careful, you still have {err_nb[4]} excluded errors")
+        if err_nb[5] > 0:
+            print(f"\nBe careful, you still have {err_nb[5]} excluded errors")
 
 
 def mango(exclude_files, exclude_errors):
     out = coding_style()
-    err_nb = [0, 0, 0, 0, 0]
+    # [INFO, MINOR, MAJOR, FATAL, UNKNOWN, EXCLUDED]
+    err_nb = [0, 0, 0, 0, 0, 0]
     is_a_tty = "tty" in ttyname(1)
 
     if not out:
@@ -261,13 +264,13 @@ def mango(exclude_files, exclude_errors):
             continue
         line = line.split(':')
         if path.abspath(line[0]) in exclude_files or line[3] in exclude_errors:
-            err_nb[4] += 1
+            err_nb[5] += 1
             continue
         try:
             index = rules.index(line[3])
         except:
             print(f"{backup_line}\n")
-            err_nb[3] += 1
+            err_nb[4] += 1
             continue
         if line[0][0:2] == "./":
             line[0] = line[0][2:]
@@ -278,6 +281,8 @@ def mango(exclude_files, exclude_errors):
                 err_nb[1] += 1
             case " MAJOR":
                 err_nb[2] += 1
+            case " FATAL":
+                err_nb[3] += 1
         print_error(line, index)
     print_errors_number(err_nb, is_a_tty)
 
