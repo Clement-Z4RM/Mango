@@ -1,8 +1,12 @@
 # 🥭 Mango
 
-Mango is an improved and skinned Epitech Banana coding style checker.
+Mango is an improved and skinned [Epitech coding style](https://github.com/Epitech/coding-style-checker) checker.
 
-I decline all responsibility if you have a coding style error not detected by Mango. 😉
+I decline all responsibility if you have a coding style error not detected by Mango (there is no reason for this to happen). 😉
+
+#### How does it work?
+Mango uses the [Epitech coding style](https://github.com/Epitech/coding-style-checker) (that use the [Epitech banana coding style checker](https://github.com/Epitech/banana-coding-style-checker)).<br/>
+It executes the coding style checker on your files and then parses the output to display it in a more readable way.
 
 ## 🔧 Installation
 
