@@ -2,13 +2,27 @@
 
 Mango is an improved and skinned Epitech Banana coding style checker.
 
-I decline all responsibility if you have a coding style error not detected by Mango.
+I decline all responsibility if you have a coding style error not detected by Mango. 😉
 
 ## 🔧 Installation
 
-You need to have [**Docker**](https://www.docker.com/) installed: [install docker](https://docs.docker.com/engine/install/).
+You must have these packages installed - if you are on the [official Epitech dump](https://github.com/Epitech/dump) you will have them by default:
+ - [**Docker**](https://www.docker.com) ([install docker](https://docs.docker.com/engine/install))
+ - [**Python 3**](https://www.python.org) ([install python](https://www.python.org/downloads))
+ - [**wget**](https://www.gnu.org/software/wget) or [**curl**](https://curl.se/) (optional)
+### With wget
 ```bash
 sudo wget https://raw.githubusercontent.com/Clement-Z4RM/Mango/main/mango.py -O /bin/mango && sudo chmod +x /bin/mango
+```
+### With curl
+```bash
+sudo curl https://raw.githubusercontent.com/Clement-Z4RM/Mango/main/mango.py -o /bin/mango && sudo chmod +x /bin/mango
+```
+### Manually
+ - Copy the content of [mango.py](https://raw.githubusercontent.com/Clement-Z4RM/Mango/main/mango.py) in */bin/mango*
+ - Execute this command:
+```bash
+sudo chmod +x /bin/mango
 ```
 
 ## ⚙ Usage
@@ -22,7 +36,7 @@ For a detailed usage, type:
 mango -h, --help
 ```
 
-If you want to excludes the files contained in your *.gitignore*, type:
+If you want to exclude the files contained in your *.gitignore*, type:
 ```bash
 mango -Ef $(cat .gitignore)
 ```
@@ -38,7 +52,7 @@ mango -Ef $(cat .gitignore)
 <br/>
 `-v`; `--version`: print currently installed **Mango** version
 <br/>
-`-u`; `--update`: update **Mango** to newest version
+`-u`; `--update`: update **Mango** to the newest version (*not working at the moment, it will be re-introduced in a future version*)
 
 ## ➡ Examples
 
@@ -58,16 +72,16 @@ int main()
 >$ mango
 ```
 ```
-main.c:1: C-G1
-File header
+main.c
+MINOR C-G1: File header
 C files and every Makefile must always start with the standard header of the school.
 
-main.c:3: C-F6
-Functions without parameters
+main.c at line 3
+MAJOR C-F6: Functions without parameters
 A function taking no parameters must take void as a parameter in the function declaration.
 
-main.c:6: C-A3
-Line break at the end of file
+main.c at line 6
+INFO C-A3: Line break at the end of file
 Files must end with a line break.
 
 1 Major | 1 Minor | 1 Info
@@ -79,15 +93,15 @@ Files must end with a line break.
 >$ mango --exclude-errors C-F6
 ```
 ```
-main.c:1: C-G1
-File header
+main.c
+MINOR C-G1: File header
 C files and every Makefile must always start with the standard header of the school.
 
-main.c:6: C-A3
-Line break at the end of file
+main.c at line 6
+INFO C-A3: Line break at the end of file
 Files must end with a line break.
 
-0 Major | 1 Minor | 1 Info
+1 Major | 1 Minor | 1 Info
 ```
 
 <br/>
@@ -96,9 +110,13 @@ Files must end with a line break.
 >$ mango --exclude-files main.c
 ```
 ```
-✅ There isn't coding style error
+✅ There is no coding style error
 ```
 You can also exclude an entire folder (e.g. *mango --exclude-files src/*).
+
+## Support
+
+For support, [open an issue](https://github.com/Clement-Z4RM/Mango/issues/new).
 
 ## ➕ Contributing
 
@@ -107,4 +125,4 @@ to discuss what you would like to change.
 
 ## 👨‍⚖️ License
 
-[GNU General Public](https://choosealicense.com/licenses/gpl-3.0/)
+[GNU General Public](https://choosealicense.com/licenses/gpl-3.0)
