@@ -151,12 +151,12 @@ def download_coding_style():
 
 def update():
     print("Updating not working at the moment, it will be re-introduced in a future version.")
-    exit()
+    exit(0)
 
 
 def print_version():
     print(f"Mango {version}")
-    exit()
+    exit(0)
 
 
 def get_exclude_files(args):
@@ -194,7 +194,7 @@ def coding_style():
             file.close()
     except:
         print(f"{argv[0]}: Cannot open log file.", file=stderr)
-        exit(84)
+        exit(1)
     out = out.split('\n')
     return out
 
@@ -285,9 +285,9 @@ def main():
                 mango(exclude_files, exclude_errors)
                 sleep(sleep_duration)
             except KeyboardInterrupt:
-                exit()
+                exit(0)
             except:
-                exit(84)
+                exit(1)
     else:
         mango(exclude_files, exclude_errors)
 
