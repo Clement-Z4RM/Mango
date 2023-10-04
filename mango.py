@@ -147,23 +147,24 @@ def set_arguments():
 def download_coding_style():
     download_command = which("wget") or which("curl")
 
-    print("\33[3mcoding-style\33[0m command not found, ", end='')
+    print("\33[3mcoding-style\33[0m command not found,", end='')
     if download_command is None:
         print(" and neither \33[3wget\33[0m nor \33[3curl\33[0m were found on your computer,"
               f" so please download \33[3mcoding-style\33[0m here: {CODING_STYLE_URL}"
               f" and/or add it to your path")
-    print(", download it? [Y/n] ", end='')
+    print(" download it? [Y/n] ", end='')
 
     key = input().lower()
 
     if key not in ('', 'y', 'yes', 'o', 'oui'):
-        print("You must have the \33[3mcoding-style\33[0m command to be able to use \33[2mMango\33[0m")
+        print("You must have the \33[3mcoding-style\33[0m command to be able to use \33[1mMango\33[0m")
         sys.exit(1)
-    print("Downloading coding-style...\n")
+    print("Downloading \33[3mcoding-style\33[0m...\n")
 
     system(f"sudo {download_command} {CODING_STYLE_URL}"
            f" -{'O' if download_command == 'wget' else 'o'} /bin/coding-style 2> /dev/null")
     system("sudo chmod +x /bin/coding-style")
+    print("\33[3mcoding-style\33[0m downloaded\n")
 
 
 def update():
