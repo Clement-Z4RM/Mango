@@ -4,7 +4,6 @@ from sys import argv, stderr
 from os import ttyname, system, path, walk
 from argparse import ArgumentParser as parseArgs
 from shutil import which
-# from requests import get
 from time import sleep
 
 version = "v1.7.0"
@@ -150,25 +149,7 @@ def download_coding_style():
     system(f"sudo chmod +x /bin/coding-style")
 
 
-# def check_for_update(args):
-#     try:
-#         response = get("https://api.github.com/repos/Clement-Z4RM/Mango/releases/latest")
-#         if response:
-#             new_version = response.json()["name"]
-#         if not args.update and new_version != version:
-#             print(
-#                 "New version of Mango available. You can update it doing \"\33[3mmango -u, --update\33[0m\".\n")
-#     except:
-#         if args.update:
-#             print("Cannot get latest version, please verify your internet connection.\n",
-#                   file=stderr)
-#         else:
-#             print("Cannot check for update, please verify your internet connection.\n", file=stderr)
-
-
 def update():
-    # system("sudo wget https://raw.githubusercontent.com/Clement-Z4RM/Mango/main/mango.py -O /bin/mango 2> /dev/null && sudo chmod +x /bin/mango")
-    # system("curl -s https://pastebin.com/raw/baCbaUqU")
     print("Updating not working at the moment, it will be re-introduced in a future version.")
     exit()
 
