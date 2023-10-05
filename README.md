@@ -108,7 +108,7 @@ main.c at line 6
 INFO C-A3: Line break at the end of file
 Files must end with a line break.
 
-1 Major | 1 Minor | 1 Info
+0 Major | 1 Minor | 1 Info | 1 excluded
 ```
 
 <br/>
