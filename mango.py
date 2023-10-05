@@ -7,7 +7,7 @@ from argparse import ArgumentParser as parseArgs
 from shutil import which
 from time import sleep
 
-VERSION = "v1.8.0"
+VERSION = "v1.8.1"
 
 CODING_STYLE_URL = "https://raw.githubusercontent.com/Epitech/coding-style-checker/main/coding-style.sh"
 
@@ -250,7 +250,10 @@ def mango(exclude_files, exclude_errors):
     out = coding_style()
     # [INFO, MINOR, MAJOR, FATAL, UNKNOWN, EXCLUDED]
     err_nb = [0, 0, 0, 0, 0, 0]
-    is_a_tty = "tty" in ttyname(1)
+    try:
+        is_a_tty = "tty" in ttyname(1)
+    except:
+        is_a_tty = True
 
     if not out:
         if not is_a_tty:
