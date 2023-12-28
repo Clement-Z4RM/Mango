@@ -7,9 +7,12 @@ from argparse import ArgumentParser as parseArgs
 from shutil import which
 from time import sleep
 
-VERSION = "v1.8.1"
+VERSION = "v1.9.0"
 
-CODING_STYLE_URL = "https://raw.githubusercontent.com/Epitech/coding-style-checker/main/coding-style.sh"
+LAMBDANANAS = "lambdananas"
+CODING_STYLE = "coding-style"
+
+CODING_STYLE_URL = f"https://raw.githubusercontent.com/Epitech/{CODING_STYLE}-checker/main/{CODING_STYLE}.sh"
 
 MANGO_ASCII = """                                                      \33[48;5;130m \33[48;5;094m  \33[0m
                                \33[48;5;166m                   \33[0m   \33[48;5;166m \33[48;5;130m \33[48;5;094m \33[0m
@@ -34,34 +37,34 @@ MANGO_ASCII = """                                                      \33[48;5;
        \33[48;5;003m      \33[48;5;100m     \33[48;5;136m                \33[48;5;130m  \33[48;5;094m      \33[0m
           \33[48;5;003m       \33[48;5;100m      \33[48;5;136m \33[48;5;130m   \33[48;5;094m      \33[0m
 
-MANGO_TTY = "    Sad TTY not handle well colors :(\n" \
-            "                                                        %\n" \
-            "                                                      (#%\n" \
-            "                               (((((((((((((######   (#%\n" \
-            "                           ((((((((((((((((((((######%%%%%%\n" \
-            "                        (//((((((((((((((((((((((####%%%%%%%%%%\n" \
-            "                      /////////////(((((((((((((((####%%%%%%%%%%%\n" \
-            "                    //////////////////((((((((((((((####%%%%%%%%%%\n" \
-            "                  %/////******///////////((((((((((((####%%%%%%%%%%\n" \
-            "                 ///******,*****//////////((((((((((((####%%%%%%%%%&\n" \
-            "                //****,,,,,,,***///////////((((((((((((###%%%%%%%%%%\n" \
-            "               /****,,,,..,,,***///////////(((((((((((((###%%%%%%%%&\n" \
-            "             %*****,,,,,,,,,****///////////(((((((((((((###%%%%%%%%&\n" \
-            "            ////****,,,,,,****////////////((((((((###(((####%%%%%%%%\n" \
-            "          ///////************////////////((((((((######(####%%%%%%%%\n" \
-            "        %//////////******///////////////((((((((########%###%%%%%%%%\n" \
-            "       ///////////////////////////////(((((((((#######%%%%   %%%%%%%&\n" \
-            "     ((((////////////////////////////((((((((########%%%%          %%\n" \
-            "    ((((((((((((//////////////////(((((((((########%%%%\n" \
-            "    (((((((((((((((((((////(/((((((((((((########%%%%\n" \
-            "    #######(((((((((((((((((((((((((((#########%%%\n" \
-            "     ##########(((((((((((((((((((##########%%#\n" \
-            "      %###############(((((##############%\n" \
-            "          #########################(\n\n"
+"""
 
-types = [" INFO", " MINOR", " MAJOR", " FATAL"]
+MANGO_TTY = """    Sad TTY not handle well colors :(
+                                                        %
+                                                      (#%
+                               (((((((((((((######   (#%
+                           ((((((((((((((((((((######%%%%%%
+                        (//((((((((((((((((((((((####%%%%%%%%%%
+                      /////////////(((((((((((((((####%%%%%%%%%%%
+                    //////////////////((((((((((((((####%%%%%%%%%%
+                  %/////******///////////((((((((((((####%%%%%%%%%%
+                 ///******,*****//////////((((((((((((####%%%%%%%%%&
+                //****,,,,,,,***///////////((((((((((((###%%%%%%%%%%
+               /****,,,,..,,,***///////////(((((((((((((###%%%%%%%%&
+             %*****,,,,,,,,,****///////////(((((((((((((###%%%%%%%%&
+            ////****,,,,,,****////////////((((((((###(((####%%%%%%%%
+          ///////************////////////((((((((######(####%%%%%%%%
+        %//////////******///////////////((((((((########%###%%%%%%%%
+       ///////////////////////////////(((((((((#######%%%%   %%%%%%%&
+     ((((////////////////////////////((((((((########%%%%          %%
+    ((((((((((((//////////////////(((((((((########%%%%
+    (((((((((((((((((((////(/((((((((((((########%%%%
+    #######(((((((((((((((((((((((((((#########%%%
+     ##########(((((((((((((((((((##########%%#
+      %###############(((((##############%
+          #########################(
 
-colors = ["\33[36m", "\33[33m", "\33[31m", "\33[31m"]
+"""
 
 colors = {
     " INFO": "\33[36m",
@@ -70,65 +73,6 @@ colors = {
     " FATAL": "\33[31m"
 }
 
-descriptions = [
-    ["Contents of the repository",
-     "The repository must not contain compiled, temporary or unnecessary files."],
-    ["File coherence",
-     "A source file mustn't contain more than 10 functions (including at most 5 non-static functions)."],
-    ["Naming files and folders",
-     "All files names and folders must be in English, according the \33[3msnake_case\33[0m convention."],
-    ["File header",
-     "C files and every Makefile must always start with the standard header of the school."],
-    ["Separation of functions",
-     "Inside a source file, implementations of functions must be separated by one and only one empty line."],
-    ["Indentation of reprocessor directives",
-     "The preprocessor directives must be indented according to the level of indirection."],
-    ["Global variables",
-     "Global variables must be avoided as much as possible. Only global constants should be used."],
-    ["\33[3minclude", "\33[3minclude\33[0m directive must only include C header files."],
-    ["Line endings", "Line endings must be done in UNIX style (with \33[3m\\n\33[0m)."],
-    ["Trailing spaces", "No trailing spaces must be present at the end of a line."],
-    ["Leading/trailing lines",
-     "No leading empty lines must be present. No more than 1 trailing empty line must be present."],
-    ["Inline assembly",  # Celui qui a cette erreur s'est perdu MDR
-     "Inline assembly must never be used. Programming in C must be done... in C."],
-    ["Naming functions",
-     "The name of a function must define the task it executes and must contain a verb. All function names must be in English, according to the \33[3msnake_case\33[0m convention."],
-    ["Number of columns", "The length of a line must not exceed 80 columns."],
-    ["Number of lines",
-     "The body of a function should be as short as possible, and must not exceed 20 lines."],
-    ["Number of parameters", "A function must not have more than 4 parameters."],
-    ["Functions without parameters",
-     "A function taking no parameters must take void as a parameter in the function declaration."],
-    ["Structures as parameters",
-     "Structures must be passed to functions using a pointer, not by copy."],
-    ["Comments inside a function", "There must be no comment within a function."],
-    ["Nested functions", "Nested functions are not allowed."],
-    ["Code line content", "A line must correspond to only one statement."],
-    ["Indentation",
-     "Each indentation level must be done by using 4 spaces. No tabulations may be used for indentation."],
-    ["Spaces",
-     "When using a space as a separator, one and only one space character must be used."],
-    ["Curly brackets",
-     "Opening curly brackets must be at the end of the line, after the content it precedes, except for functions definitions where they must be placed alone on their line. Closing curly brackets must be alone on their line, except in the case of \33[3melse\33[0m/\33[3melse if\33[0m control structures, \33[3menum\33[0m declarations, or structure declarations."],
-    ["Variable declarations",
-     "Variables must be declared at the beginning of the function. Only one variable must be declared per statement."],
-    ["Blank lines",
-     "A blank line must separate the variable declarations from the remainder of the function. No other blank lines must be present in the function."],
-    ["Naming identifiers",
-     "All identifier names must be in English, according to the \33[3msnake_case\33[0m convention. The type names defined with \33[3mtypedef\33[0m must end with \33[3m_t\33[0m. The names of macros and global constants and the content of enums must be written in \33[3mUPPER_SNAKE_CASE\33[0m."],
-    ["Pointers",
-     "The pointer symbol (*) must be attached to the associated variable, with no spaces in between. It must also be preceded by a space, except when it is itself preceded by another asterisk. When used in a cast, the asterisk must have a space on its left side, but not on its right side."],
-    ["Conditional branching", "A conditionnal block must not contain more than 3 branches."],
-    ["Ternary operators",
-     "The use of ternary operators is allowed as far as it is kept simple and readable, and if it does not obfuscate code. You must never use nested or chained ternary operators. You must always use the value produced by a ternary operator (by assigning it to a variable or returning it for example)."],
-    ["\33[3mgoto", "Using the \33[3mgoto\33[0m keyword if forbidden."],
-    ["Content",
-     "Header files must only contain \33[1mfunctions prototypes\33[0m, \33[1mtypes declarations\33[0m, \33[1mglobal variable/constant declarations\33[0m, \33[1mmacros\33[0m, \33[1mstatic inline functions\33[0m. All these elements must only be found in header files, and thus not in source files."],
-    ["Include guard", "Headers must be protected from double inclusion."],
-    ["Macros", "Macros must match only one statement, and fit on a single line."],
-    ["Line break at the end of file", "Files must end with a line break."]
-]
 __descriptions = {
     "O1": [
         "Contents of the repository",
@@ -137,6 +81,7 @@ __descriptions = {
 }
 
 descriptions = {
+    # C
     "C-O1": __descriptions["O1"],
     "C-O3": [
         "File coherence",
@@ -239,10 +184,92 @@ descriptions = {
     "C-H3": ["Macros", "Macros must match only one statement, and fit on a single line."],
     "C-A3": ["Line break at the end of file", "Files must end with a line break."],
 
+    # Haskell
+    "H-P1": ["File is not parsable", ""],
+    "H-O1": __descriptions["O1"],
+    "H-O2": [
+        "File extension",
+        "Sources in a Haskell program should only have extension \33[3m.hs\33[0m."
+    ],
+    "H-O3": [
+        "File coherence",
+        "A Haskell project must be organised in \33[1mmodules\33[0m, each of which should match a \33[1mlogical entity\33[0m, and group all the functions and data structures associated with that entity. Every haskell file (including Main) should declare a module."
+    ],
+    "H-O4": [
+        "Naming files",
+        "The name of a file should match the name of its module. Therefore, files and modules must be named in \33[3mUpperCamelCase\33[0m and in English."
+    ],
+    "H-O5": [
+        "Module exports",
+        "All modules should explicitly declare their exported definitions. Except the Main module, all modules are expected to export at least one definition."
+    ],
+    "H-G1": [
+        "Epitech header",
+        "Every Haskell file should start with a standard Epitech header."
+    ],
+    "H-E1": [
+        "Language extensions",
+        "All language extensions are forbidden except if the project's subject says otherwise."
+    ],
+    "H-T1": [
+        "Top level bindings signatures",
+        "All top level bindings must have an accompanying type signature."
+    ],
+    "H-M1": [
+        "Mutable variables",
+        "Mutable variables are strictly forbidden."
+    ],
+    "H-M2": [
+        "Unsafe functions",
+        "Functions performing unsafe operations are strictly forbidden."
+    ],
+    "H-M3": [
+        "Forbidden Module Imports",
+        """In order to enforce rules \33[1mH-M1\33[0m and \33[1mH-M2\33[0m, importing any of the following module is strictly forbidden:
+\33[1m • Data.IORef
+ • Data.STRef
+ • Control.Concurrent.STM.TVar
+ • System.IO.Unsafe\33[Om"""
+    ],
+    "H-F1": [
+        "Coherence of functions",
+        "A function should only do one thing, not mix the different levels of abstraction and respect the principle of single responsibility (a function must only be changed for one reason)."
+    ],
+    "H-F2": [
+        "Naming function",
+        "The name of a function should define the task it executes and should contain a verb. All function names should be in English, according to the \33[3mlowerCamelCase\33[0m convention. Special characters are tolerated as long as they are justified and used sparingly."
+    ],
+    "H-F3": [
+        "Line length",
+        "A Line must be less than 80 characters long."
+    ],
+    "H-F4": [
+        "Function length",
+        "A function body must be 10 lines or less."
+    ],
+    "H-V1": [
+        "Naming identifiers",
+        "All identifier names should be in English, according to the \33[3mlowerCamelCase\33[0m convention. The type names and constructors should be in English, according to the \33[3mUpperCamelCase\33[0m convention."
+    ],
+    "H-C4": [
+        "Conditional branching",
+        "Nested If statements are strictly forbidden."
+    ],
+    "H-C5": [
+        "Guards and ifs expressed as pattern matching",
+        "Guards and if statements which can be expressed as pattern matchings must be expressed as such.."
+    ],
+    "H-D1": [
+        "Useless do",
+        "The \33[1mDo\33[0m notation is forbidden unless it contains a generator (a statement with a left arrow)."
+    ]
+}
+
 
 def set_arguments():
     parser = parseArgs()
-    parser.add_argument("-Ee", "-Eerrors", "--exclude-errors", nargs='+',
+    parser.add_argument("-H", "--haskell", action="store_true",
+                        help=f"Check coding style for Haskell (use {LAMBDANANAS} instead of {CODING_STYLE}). Some Haskell errors are detected by {CODING_STYLE}, but since Epitech uses {LAMBDANANAS}, it is better to use this flag for Haskell")
     parser.add_argument("-Ee", "-Eerrors", "--exclude-errors", nargs="+",
                         help="Exclude coding style errors from report")
     parser.add_argument("-Ef", "-Efiles", "--exclude-files", nargs="+",
@@ -256,28 +283,33 @@ def set_arguments():
     return parser.parse_args()
 
 
-def download_coding_style():
+def download_coding_style(is_lambdananas):
+    if is_lambdananas:
+        print(f"""You are using \33[1mHaskell\33[0m, so you need to download \33[3m{LAMBDANANAS}\33[0m
+You can get it on the intranet (\33[3mAdministration/Documents publics/Public/technical-documentations/Haskell/{LAMBDANANAS}.tar.gz\33[0m)
+Don't forget to add it to your PATH""")
+        sys.exit(1)
+
     download_command = which("wget") or which("curl")
 
-    print("\33[3mcoding-style\33[0m command not found,", end='')
+    print(f"\33[3m{CODING_STYLE}\33[0m command not found,", end="")
     if download_command is None:
         print(" and neither \33[3wget\33[0m nor \33[3curl\33[0m were found on your computer,"
-              f" so please download \33[3mcoding-style\33[0m here: {CODING_STYLE_URL}"
+              f" so please download \33[3m{CODING_STYLE}\33[0m here: {CODING_STYLE_URL}"
               f" and/or add it to your path")
     print(" download it? [Y/n] ", end="")
 
     key = input().lower()
 
-    if key not in ('', 'y', 'yes', 'o', 'oui'):
-        print("You must have the \33[3mcoding-style\33[0m command to be able to use \33[1mMango\33[0m")
     if key not in ("", "y", "yes", "o", "oui"):
+        print(f"You must have the \33[3m{CODING_STYLE}\33[0m command to be able to use \33[1mMango\33[0m")
         sys.exit(1)
-    print("Downloading \33[3mcoding-style\33[0m...")
+    print(f"Downloading \33[3m{CODING_STYLE}\33[0m...")
 
     system(f"sudo {download_command} {CODING_STYLE_URL}"
-           f" -{'O' if 'wget' in download_command  else 'o'} /bin/coding-style 2> /dev/null")
-    system("sudo chmod +x /bin/coding-style")
-    print("\33[3mcoding-style\33[0m downloaded\n")
+           f" -{'O' if 'wget' in download_command  else 'o'} /bin/{CODING_STYLE} 2> /dev/null")
+    system(f"sudo chmod +x /bin/{CODING_STYLE}")
+    print(f"\33[3m{CODING_STYLE}\33[0m downloaded\n")
 
 
 def update():
@@ -316,11 +348,21 @@ def get_exclude_errors(args):
     return exclude
 
 
-def coding_style():
-    system("sudo rm -f /tmp/coding-style-reports.log")
-    system("coding-style . /tmp/ > /dev/null")
+def coding_style(checker):
+    if checker == LAMBDANANAS:
+        all_files = []
+
+        for root, _dirs, files in walk("./"):
+            if root.startswith(("./.git", "./test", "./tests", "./bonus")):
+                continue
+            for name in files:
+                full_path = path.join(root, name)
+                all_files.append(full_path)
+        system(f"{checker} {' '.join(all_files)} > ./{CODING_STYLE}-reports.log")
+    else:
+        system(f"{checker} . ./ > /dev/null")
     try:
-        with open("/tmp/coding-style-reports.log", "r", encoding="utf-8") as file:
+        with open(f"./{CODING_STYLE}-reports.log", "r", encoding="utf-8") as file:
             out = file.read()
             file.close()
     except:
@@ -364,8 +406,8 @@ def print_errors_number(err_nb, is_a_tty):
             print(f"\nBe careful, you still have {err_nb[5]} excluded errors")
 
 
-def mango(exclude_files, exclude_errors):
-    out = coding_style()
+def mango(exclude_files, exclude_errors, checker):
+    out = coding_style(checker)
     # [INFO, MINOR, MAJOR, FATAL, UNKNOWN, EXCLUDED]
     err_nb = [0, 0, 0, 0, 0, 0]
     try:
@@ -383,12 +425,14 @@ def mango(exclude_files, exclude_errors):
         backup_line = line
         if line == "":
             continue
-        line = line.split(':')
-        if path.abspath(line[0]) in exclude_files or line[3] in exclude_errors:
-            err_nb[5] += 1
-            continue
+        line = line.split(":")
+        if line[0].endswith("contains forbidden extensions"):
+            line = [line[0].split(" ")[0], "1", " MAJOR", "H-O2"]
+        line[3] = line[3].split(" #")[0]
         try:
-            index = rules.index(line[3])
+            if path.abspath(line[0]) in exclude_files or line[3] in exclude_errors:
+                err_nb[5] += 1
+                continue
             rule = descriptions[line[3]]
         except:
             print(f"{backup_line}\n")
@@ -411,13 +455,14 @@ def mango(exclude_files, exclude_errors):
 
 def main():
     args = set_arguments()
+    checker = LAMBDANANAS if args.haskell else CODING_STYLE
 
     if args.version:
         print_version()
     if args.update:
         update()
-    if which("coding-style") is None:
-        download_coding_style()
+    if which(checker) is None:
+        download_coding_style(checker == LAMBDANANAS)
 
     exclude_files = get_exclude_files(args)
     exclude_errors = get_exclude_errors(args)
@@ -427,14 +472,14 @@ def main():
         while True:
             try:
                 system("clear")
-                mango(exclude_files, exclude_errors)
+                mango(exclude_files, exclude_errors, checker)
                 sleep(sleep_duration)
             except KeyboardInterrupt:
                 sys.exit(0)
             except:
                 sys.exit(1)
     else:
-        mango(exclude_files, exclude_errors)
+        mango(exclude_files, exclude_errors, checker)
 
 
 if __name__ == "__main__":
