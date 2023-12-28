@@ -1,11 +1,17 @@
 # 🥭 Mango
 
+## 🆕 New
+**Mango is now available for Haskell**
+Check installation section for more information
+
+## What is Mango?
+
 Mango is an improved and skinned [Epitech coding style](https://github.com/Epitech/coding-style-checker) checker.
 
 I decline all responsibility if you have a coding style error not detected by Mango (there is no reason for this to happen). 😉
 
 #### How does it work?
-Mango uses the [Epitech coding style](https://github.com/Epitech/coding-style-checker) (that use the [Epitech banana coding style checker](https://github.com/Epitech/banana-coding-style-checker)).<br/>
+Mango uses the [Epitech coding style](https://github.com/Epitech/coding-style-checker) (that use the [Epitech banana coding style checker](https://github.com/Epitech/banana-coding-style-checker)).\
 It executes the coding style checker on your files and then parses the output to display it in a more readable way.
 
 ## 🔧 Installation
@@ -31,6 +37,15 @@ sudo rm /bin/mango; sudo curl https://raw.githubusercontent.com/Clement-Z4RM/Man
 ```bash
 sudo chmod +x /bin/mango
 ```
+### For Haskell
+To use Mango with Haskell, you can use it just like that, but it's better to have **lambdananas** (faster than **coding-style**) and maybe detect more errors.\
+You can get it on the intranet (*Administration/Documents publics/Public/technical-documentations/Haskell/lambdananas.tar.gz*).\
+Don't forget to add it to your PATH.
+
+To use it, you can run:
+```bash
+mango -H
+```
 
 ## ⚙ Usage
 
@@ -51,14 +66,10 @@ mango -Ef $(cat .gitignore)
 
 ## 📋 Arguments
 
-`-Ee <error(s)>`; `-Eerrors <error(s)>`; `--exclude-errors <error(s)>`: exclude error(s) from **Mango** report
-<br/>
-`-Ef <file(s)>`; `-Efiles <file(s)>`; `--exclude-files <file(s)>`: exclude file(s)/folder(s) from **Mango** report
-<br/>
-`-w <time>`; `--watch <time>`: relaunch **Mango** every *time* seconds (warning, this will clear the terminal)
-<br/>
-`-v`; `--version`: print currently installed **Mango** version
-<br/>
+`-Ee <error(s)>`; `-Eerrors <error(s)>`; `--exclude-errors <error(s)>`: exclude error(s) from **Mango** report\
+`-Ef <file(s)>`; `-Efiles <file(s)>`; `--exclude-files <file(s)>`: exclude file(s)/folder(s) from **Mango** report\
+`-w <time>`; `--watch <time>`: relaunch **Mango** every *time* seconds (warning, this will clear the terminal)\
+`-v`; `--version`: print currently installed **Mango** version\
 `-u`; `--update`: update **Mango** to the newest version (*not working at the moment, it will be re-introduced in a future version*)
 
 ## ➡ Examples

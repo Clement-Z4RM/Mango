@@ -268,7 +268,7 @@ descriptions = {
 
 def set_arguments():
     parser = parseArgs()
-    parser.add_argument("-H", "--haskell", action="store_true",
+    parser.add_argument("-H", "--haskell", "--lambdananas", action="store_true",
                         help=f"Check coding style for Haskell (use {LAMBDANANAS} instead of {CODING_STYLE}). Some Haskell errors are detected by {CODING_STYLE}, but since Epitech uses {LAMBDANANAS}, it is better to use this flag for Haskell")
     parser.add_argument("-Ee", "-Eerrors", "--exclude-errors", nargs="+",
                         help="Exclude coding style errors from report")
