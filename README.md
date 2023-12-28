@@ -1,7 +1,7 @@
 # 🥭 Mango
 
 ## 🆕 New
-**Mango is now available for Haskell**
+**Mango is now available for Haskell**\
 Check installation section for more information
 
 ## What is Mango?
@@ -66,6 +66,7 @@ mango -Ef $(cat .gitignore)
 
 ## 📋 Arguments
 
+`-H`; `--haskell`; `--lambdananas`: check coding style for **Haskell** (use **lambdananas** instead of **coding-style**). Some **Haskell** errors are detected by **coding-style**, but since Epitech uses **lambdananas**, it is better to use this flag for **Haskell**\
 `-Ee <error(s)>`; `-Eerrors <error(s)>`; `--exclude-errors <error(s)>`: exclude error(s) from **Mango** report\
 `-Ef <file(s)>`; `-Efiles <file(s)>`; `--exclude-files <file(s)>`: exclude file(s)/folder(s) from **Mango** report\
 `-w <time>`; `--watch <time>`: relaunch **Mango** every *time* seconds (warning, this will clear the terminal)\
