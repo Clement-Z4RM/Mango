@@ -2,7 +2,7 @@
 
 import sys
 from sys import argv, stderr
-from os import ttyname, system, path, walk
+from os import ttyname, system, path, walk, remove
 from argparse import ArgumentParser as parseArgs
 from shutil import which
 from time import sleep
@@ -326,7 +326,12 @@ def coding_style():
     except:
         print(f"{argv[0]}: Cannot open log file.", file=stderr)
         sys.exit(1)
-    out = out.split('\n')
+    try:
+        remove(f"./{CODING_STYLE}-reports.log")
+    except:
+        print(f"{argv[0]}: Cannot remove log file.", file=stderr)
+        sys.exit(1)
+    out = out.split("\n")
     return out
 
 
