@@ -2,17 +2,24 @@
 
 ## 🆕 New
 **Mango is now available for Haskell**\
-Check installation section for more information
+Check installation section for more information\
 
-## What is Mango?
+**By default, Mango will ignore the files contained in your .gitignore**
 
-Mango is an improved and skinned [Epitech coding style](https://github.com/Epitech/coding-style-checker) checker.
+## 🤔 What is Mango?
+
+**Mango** is an improved and skinned [**C**](https://github.com/Epitech/coding-style-checker) and **Haskell** Epitech coding style checker.
 
 I decline all responsibility if you have a coding style error not detected by Mango (there is no reason for this to happen). 😉
 
 #### How does it work?
-Mango uses the [Epitech coding style](https://github.com/Epitech/coding-style-checker) (that use the [Epitech banana coding style checker](https://github.com/Epitech/banana-coding-style-checker)).\
+
+**For C:**
+> **Mango** uses the [Epitech coding style](https://github.com/Epitech/coding-style-checker) (that use the [Epitech banana coding style checker](https://github.com/Epitech/banana-coding-style-checker)).\
 It executes the coding style checker on your files and then parses the output to display it in a more readable way.
+
+**For Haskell:**
+> **Mango** uses **lambdananas** and parses its output to display it in a more readable way.
 
 ## 🔧 Installation
 
@@ -21,7 +28,7 @@ You must have these packages installed - if you are on the [official Epitech dum
  - [**Python 3**](https://www.python.org) ([install python](https://www.python.org/downloads))
  - [**wget**](https://www.gnu.org/software/wget) or [**curl**](https://curl.se/) (optional)
 
-> ⚠ If you have already an executable named *mango* in */bin*, it will be replaced by this one.
+> ⚠ If you have already an executable named `mango` in `/bin`, it will be replaced by this one.
 
 ### With wget
 ```bash
@@ -32,25 +39,28 @@ sudo rm /bin/mango; sudo wget https://raw.githubusercontent.com/Clement-Z4RM/Man
 sudo rm /bin/mango; sudo curl https://raw.githubusercontent.com/Clement-Z4RM/Mango/main/mango.py -o /bin/mango && sudo chmod +x /bin/mango
 ```
 ### Manually
- - Copy the content of [mango.py](https://raw.githubusercontent.com/Clement-Z4RM/Mango/main/mango.py) in */bin/mango*
+ - Copy the content of [mango.py](https://raw.githubusercontent.com/Clement-Z4RM/Mango/main/mango.py) in `/bin/mango`
  - Execute this command:
 ```bash
 sudo chmod +x /bin/mango
 ```
 ### For Haskell
-To use Mango with Haskell, you can use it just like that, but it's better to have **lambdananas** (faster than **coding-style**) and maybe detect more errors.\
+To use **Mango** with **Haskell**, you can use it just like that, but it's better to have **lambdananas** (faster than **coding-style**) and maybe detect more errors.\
 You can get it on the intranet (*Administration/Documents publics/Public/technical-documentations/Haskell/lambdananas.tar.gz*).\
-Don't forget to add it to your PATH.
-
-To use it, you can run:
-```bash
-mango -H
-```
+Don't forget to add it to your *PATH*.
 
 ## ⚙ Usage
 
+**For C:**
 ```bash
 mango
+```
+
+**For Haskell:**
+```bash
+mango -H
+# I advise you to make an alias, like "mhango"
+alias mhango="mango -H"
 ```
 
 For a detailed usage, type:
@@ -58,20 +68,40 @@ For a detailed usage, type:
 mango -h, --help
 ```
 
-If you want to exclude the files contained in your *.gitignore*, type:
-```bash
-mango -Ef $(cat .gitignore)
-```
-<sub>"-Ef" can be replaced by "-Efiles" or "--exclude-files"</sub>
-
 ## 📋 Arguments
 
-`-H`; `--haskell`; `--lambdananas`: check coding style for **Haskell** (use **lambdananas** instead of **coding-style**). Some **Haskell** errors are detected by **coding-style**, but since Epitech uses **lambdananas**, it is better to use this flag for **Haskell**\
-`-Ee <error(s)>`; `-Eerrors <error(s)>`; `--exclude-errors <error(s)>`: exclude error(s) from **Mango** report\
-`-Ef <file(s)>`; `-Efiles <file(s)>`; `--exclude-files <file(s)>`: exclude file(s)/folder(s) from **Mango** report\
-`-w <time>`; `--watch <time>`: relaunch **Mango** every *time* seconds (warning, this will clear the terminal)\
-`-v`; `--version`: print currently installed **Mango** version\
-`-u`; `--update`: update **Mango** to the newest version (*not working at the moment, it will be re-introduced in a future version*)
+`-H` `--haskell` `--lambdananas`\
+Check coding style for **Haskell** (use **lambdananas** instead of **coding-style**). Some **Haskell** errors are detected by **coding-style**, but since Epitech uses **lambdananas**, it is better to use this flag for **Haskell**
+
+`-i` `--ignore` `--gitignore`\
+Don't ignore *.gitignore* content
+
+`-l` `--list`\
+List all errors (with descriptions)
+
+`-Sl` `--short-list`\
+List all errors (without descriptions)
+
+`-s <error>` `--show <error>`\
+Show description of an error
+
+`-Ee <error(s)>` `-Eerrors <error(s)>` `--exclude-errors <error(s)>`\
+Exclude error(s) from **Mango** report
+
+`-Ef <file(s)>` `-Efiles <file(s)>` `--exclude-files <file(s)>`\
+Exclude file(s) and folder(s) from **Mango** report
+
+`-w <time>` `--watch <time>`\
+Relaunch **Mango** every *time* seconds (warning, this will clear the terminal)
+
+`-q` `--quiet`\
+Don’t output anything, just set exit status
+
+`-v` `--version`\
+Print currently installed **Mango** version
+
+`-u` `--update`\
+Update **Mango** to the newest version (*not working at the moment, it will maybe re-introduced in a future version*)
 
 ## ➡ Examples
 
@@ -88,7 +118,7 @@ int main()
 <br/>
 
 ```bash
->$ mango
+> mango
 ```
 ```
 main.c
@@ -109,7 +139,7 @@ Files must end with a line break.
 <br/>
 
 ```bash
->$ mango --exclude-errors C-F6
+> mango -Ee C-F6
 ```
 ```
 main.c
@@ -126,21 +156,22 @@ Files must end with a line break.
 <br/>
 
 ```bash
->$ mango --exclude-files main.c
+> mango -Ef main.c
 ```
 ```
 ✅ There is no coding style error
-```
-You can also exclude an entire folder (e.g. *mango --exclude-files src/*).
 
-## Support
+Be careful, you still have 3 excluded errors
+```
+You can also exclude an entire folder (e.g. `mango -Ef src/`).
+
+## ❓ Support
 
 For support, [open an issue](https://github.com/Clement-Z4RM/Mango/issues/new).
 
 ## ➕ Contributing
 
-Pull requests are welcome. For major changes, please open an issue first
-to discuss what you would like to change.
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 ## 👨‍⚖️ License
 
