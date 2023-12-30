@@ -385,6 +385,7 @@ Don't forget to add it to your PATH""")
         print(f"Error while setting permissions for \33[3m{CODING_STYLE}\33[0m")
         exit(1)
     print(f"\33[3m{CODING_STYLE}\33[0m downloaded\n")
+    return which(CODING_STYLE)
 
 
 def list_errors(color, short=False):
@@ -618,7 +619,9 @@ def main():
     checker = which(LAMBDANANAS if args.haskell else CODING_STYLE)
 
     if checker is None:
-        download_coding_style(args.haskell)
+        checker = download_coding_style(args.haskell)
+    if checker is None:
+        exit(1)
 
     exclude_files = get_exclude_files(args)
     exclude_errors = get_exclude_errors(args)
