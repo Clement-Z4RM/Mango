@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 
-import sys
-from sys import argv, stderr
+from sys import exit
 from os import ttyname, system, path, walk, remove
 from argparse import ArgumentParser as parseArgs
+from re import sub
 from shutil import which
 from time import sleep
 
@@ -14,30 +14,58 @@ CODING_STYLE = "coding-style"
 
 CODING_STYLE_URL = f"https://raw.githubusercontent.com/Epitech/{CODING_STYLE}-checker/main/{CODING_STYLE}.sh"
 
-MANGO_ASCII = """                                                      \33[48;5;130m \33[48;5;094m  \33[0m
-                               \33[48;5;166m                   \33[0m   \33[48;5;166m \33[48;5;130m \33[48;5;094m \33[0m
-                           \33[48;5;202m          \33[48;5;166m                \33[48;5;058m      \33[0m
-                        \33[48;5;208m        \33[48;5;202m         \33[48;5;166m          \33[48;5;064m   \33[48;5;058m         \33[0m
-                      \33[48;5;208m               \33[48;5;202m      \33[48;5;166m       \33[48;5;106m  \33[48;5;064m   \33[48;5;058m          \33[0m
-                    \33[48;5;208m                     \33[48;5;202m   \33[48;5;166m      \33[48;5;106m    \33[48;5;064m   \33[48;5;058m         \33[0m
-                   \33[48;5;214m      \33[48;5;215m     \33[48;5;214m \33[48;5;208m            \33[48;5;202m \33[48;5;166m     \33[48;5;142m \33[48;5;106m     \33[48;5;064m   \33[48;5;058m         \33[0m
-                 \33[48;5;214m    \33[48;5;215m          \33[48;5;214m  \33[48;5;208m           \33[48;5;172m  \33[48;5;166m   \33[48;5;172m \33[48;5;106m      \33[48;5;064m  \33[48;5;058m          \33[0m
-                \33[48;5;214m    \33[48;5;215m  \33[48;5;221m  \33[48;5;222m   \33[48;5;221m \33[48;5;215m    \33[48;5;214m  \33[48;5;208m         \33[48;5;172m   \33[48;5;166m    \33[48;5;112m  \33[48;5;106m     \33[48;5;064m  \33[48;5;058m         \33[0m
-               \33[48;5;214m    \33[48;5;221m   \33[48;5;222m     \33[48;5;221m  \33[48;5;215m  \33[48;5;214m     \33[48;5;208m      \33[48;5;172m     \33[48;5;166m   \33[48;5;142m \33[48;5;112m \33[48;5;106m     \33[48;5;064m   \33[48;5;058m        \33[0m
-              \33[48;5;214m  \33[48;5;220m \33[48;5;220m \33[48;5;221m    \33[48;5;222m    \33[48;5;221m   \33[48;5;215m \33[48;5;214m        \33[48;5;208m    \33[48;5;172m     \33[48;5;166m    \33[48;5;112m  \33[48;5;106m     \33[48;5;064m  \33[48;5;058m        \33[0m
-            \33[48;5;214m    \33[48;5;220m \33[48;5;220m \33[48;5;221m          \33[48;5;214m          \33[48;5;208m  \33[48;5;172m       \33[48;5;166m  \33[48;5;130m    \33[48;5;106m     \33[48;5;064m  \33[48;5;058m        \33[0m
-          \33[48;5;214m      \33[48;5;220m \33[48;5;220m \33[48;5;220m \33[48;5;221m     \33[48;5;220m \33[48;5;220m \33[48;5;220m \33[48;5;214m         \33[48;5;178m  \33[48;5;172m        \33[48;5;166m \33[48;5;130m      \33[48;5;136m \33[48;5;106m   \33[48;5;064m   \33[48;5;058m       \33[0m
-         \33[48;5;178m       \33[48;5;214m                  \33[48;5;178m     \33[48;5;172m       \33[48;5;136m \33[48;5;130m        \33[48;5;094m  \33[48;5;106m \33[48;5;064m   \33[48;5;058m       \33[0m
-       \33[48;5;178m                \33[48;5;214m      \33[48;5;178m \33[48;5;214m \33[48;5;178m       \33[48;5;172m      \33[48;5;136m  \33[48;5;130m       \33[48;5;094m      \33[0m   \33[48;5;058m       \33[0m
-      \33[48;5;142m  \33[48;5;178m                            \33[48;5;172m      \33[48;5;136m   \33[48;5;130m      \33[48;5;094m      \33[0m          \33[48;5;058m  \33[0m
-    \33[48;5;136m  \33[48;5;142m         \33[48;5;178m                   \33[48;5;172m    \33[48;5;136m     \33[48;5;130m     \33[48;5;094m       \33[0m
-    \33[48;5;136m         \33[48;5;142m      \33[48;5;178m           \33[48;5;172m     \33[48;5;136m       \33[48;5;130m    \33[48;5;094m       \33[0m
-    \33[48;5;100m       \33[48;5;136m                             \33[48;5;130m   \33[48;5;094m       \33[0m
-     \33[48;5;003m    \33[48;5;100m      \33[48;5;136m                       \33[48;5;130m  \33[48;5;094m      \33[0m
-       \33[48;5;003m      \33[48;5;100m     \33[48;5;136m                \33[48;5;130m  \33[48;5;094m      \33[0m
-          \33[48;5;003m       \33[48;5;100m      \33[48;5;136m \33[48;5;130m   \33[48;5;094m      \33[0m
+# BEIGE/BROWN
+B0 = "\33[48;5;003m"
+B1 = "\33[48;5;094m"
+B2 = "\33[48;5;130m"
+B3 = "\33[48;5;136m"
+B4 = "\33[48;5;215m"
+B5 = "\33[48;5;222m"
 
-"""
+# GREEN
+G0 = "\33[48;5;058m"
+G1 = "\33[48;5;064m"
+G2 = "\33[48;5;100m"
+G3 = "\33[48;5;106m"
+G4 = "\33[48;5;112m"
+G5 = "\33[48;5;142m"
+
+# ORANGE
+O0 = "\33[48;5;166m"
+O1 = "\33[48;5;172m"
+O2 = "\33[48;5;202m"
+O3 = "\33[48;5;208m"
+
+# YELLOW
+Y0 = "\33[48;5;178m"
+Y1 = "\33[48;5;214m"
+Y2 = "\33[48;5;220m"
+Y3 = "\33[48;5;221m"
+
+MANGO_ASCII = f"""{' ' * 54}{B2} {B1}  \33[0m
+{' ' * 31}{O0}{' ' * 19}\33[0m   {O0} {B2} {B1} \33[0m
+{' ' * 27}{O2}          {O0}{' ' * 16}{G0}      \33[0m
+{' ' * 24}{O3}        {O2}         {O0}          {G1}   {G0}         \33[0m
+{' ' * 22}{O3}{' ' * 15}{O2}      {O0}       {G3}  {G1}   {G0}          \33[0m
+{' ' * 20}{O3}{' ' * 21}{O2}   {O0}      {G3}    {G1}   {G0}         \33[0m
+{' ' * 19}{Y1}      {B4}     {Y1} {O3}{' ' * 12}{O2} {O0}     {G5} {G3}     {G1}   {G0}         \33[0m
+{' ' * 17}{Y1}    {B4}          {Y1}  {O3}{' ' * 11}{O1}  {O0}   {O1} {G3}      {G1}  {G0}          \33[0m
+{' ' * 16}{Y1}    {B4}  {Y3}  {B5}   {Y3} {B4}    {Y1}  {O3}         {O1}   {O0}    {G4}  {G3}     {G1}  {G0}         \33[0m
+{' ' * 15}{Y1}    {Y3}   {B5}     {Y3}  {B4}  {Y1}     {O3}      {O1}     {O0}   {G5} {G4} {G3}     {G1}   {G0}        \33[0m
+{' ' * 14}{Y1}  {Y2}  {Y3}    {B5}    {Y3}   {B4} {Y1}        {O3}    {O1}     {O0}    {G4}  {G3}     {G1}  {G0}        \33[0m
+{' ' * 12}{Y1}    {Y2}  {Y3}          {Y1}          {O3}  {O1}       {O0}  {B2}    {G3}     {G1}  {G0}        \33[0m
+          {Y1}      {Y2}   {Y3}     {Y2}   {Y1}         {Y0}  {O1}        {O0} {B2}      {B3} {G3}   {G1}   {G0}       \33[0m
+         {Y0}       {Y1}{' ' * 18}{Y0}     {O1}       {B3} {B2}        {B1}  {G3} {G1}   {G0}       \33[0m
+       {Y0}{' ' * 16}{Y1}      {Y0} {Y1} {Y0}       {O1}      {B3}  {B2}       {B1}      \33[0m   {G0}       \33[0m
+      {G5}  {Y0}{' ' * 28}{O1}      {B3}   {B2}      {B1}      \33[0m          {G0}  \33[0m
+    {B3}  {G5}         {Y0}{' ' * 19}{O1}    {B3}     {B2}     {B1}       \33[0m
+    {B3}         {G5}      {Y0}{' ' * 11}{O1}     {B3}       {B2}    {B1}       \33[0m
+    {G2}       {B3}{' ' * 29}{B2}   {B1}       \33[0m
+     {B0}    {G2}      {B3}{' ' * 23}{B2}  {B1}      \33[0m
+       {B0}      {G2}     {B3}{' ' * 16}{B2}  {B1}      \33[0m
+          {B0}       {G2}      {B3} {B2}   {B1}      \33[0m
+
+    ✅ There is no coding style error"""
 
 MANGO_TTY = """    Sad TTY not handle well colors :(
                                                         %
@@ -64,7 +92,7 @@ MANGO_TTY = """    Sad TTY not handle well colors :(
       %###############(((((##############%
           #########################(
 
-"""
+    but you have no coding style error :)"""
 
 colors = {
     " INFO": "\33[36m",
@@ -76,7 +104,7 @@ colors = {
 __descriptions = {
     "O1": [
         "Contents of the repository",
-        "The repository should contain only files required for compilation and must not contain compiled (\33[3m.o, .hi, .a, .so, ...\33[3m), temporary or unnecessary files  (\33[3m*~ * #, *.d, toto, ...\33[3m)."
+        "The repository should contain only files required for compilation and must not contain compiled (\33[3m.o, .hi, .a, .so, ...\33[0m), temporary or unnecessary files  (\33[3m*~ * #, *.d, toto, ...\33[0m)."
     ]
 }
 
@@ -185,7 +213,7 @@ descriptions = {
     "C-A3": ["Line break at the end of file", "Files must end with a line break."],
 
     # Haskell
-    "H-P1": ["File is not parsable", ""],
+    "H-P1": ["File is not parsable", None],
     "H-O1": __descriptions["O1"],
     "H-O2": [
         "File extension",
@@ -229,7 +257,7 @@ descriptions = {
 \33[1m • Data.IORef
  • Data.STRef
  • Control.Concurrent.STM.TVar
- • System.IO.Unsafe\33[Om"""
+ • System.IO.Unsafe\33[0m"""
     ],
     "H-F1": [
         "Coherence of functions",
@@ -268,18 +296,65 @@ descriptions = {
 
 def set_arguments():
     parser = parseArgs()
-    parser.add_argument("-H", "--haskell", "--lambdananas", action="store_true",
-                        help=f"Check coding style for Haskell (use {LAMBDANANAS} instead of {CODING_STYLE}). Some Haskell errors are detected by {CODING_STYLE}, but since Epitech uses {LAMBDANANAS}, it is better to use this flag for Haskell")
-    parser.add_argument("-Ee", "-Eerrors", "--exclude-errors", nargs="+",
-                        help="Exclude coding style errors from report")
-    parser.add_argument("-Ef", "-Efiles", "--exclude-files", nargs="+",
-                        help="Exclude files from coding style checking")
-    parser.add_argument("-w", "--watch", nargs=1,
-                        help="Watch for changes in the repository every x seconds")
-    parser.add_argument("-v", "--version", action="store_true",
-                        help="Show Mango version")
-    parser.add_argument("-u", "--update", action="store_true",
-                        help="Update Mango to last version (actually not working)")
+    parser.add_argument(
+        "-H", "--haskell", "--lambdananas",
+        action="store_true",
+        help=f"Check coding style for Haskell (use {LAMBDANANAS} instead of {CODING_STYLE}). Some Haskell errors are detected by {CODING_STYLE}, but since Epitech uses {LAMBDANANAS}, it is better to use this flag for Haskell"
+    )
+    parser.add_argument(
+        "-i", "--ignore", "--gitignore",
+        action="store_true",
+        help="Don't exclude .gitignore content from coding style checking"
+    )
+    parser.add_argument(
+        "-l", "--list",
+        action="store_true",
+        help="List all errors (with description)"
+    )
+    parser.add_argument(
+        "-Sl", "--short-list",
+        action="store_true",
+        help="List all errors (without description)"
+    )
+    parser.add_argument(
+        "-s", "--show",
+        nargs=1,
+        help="Show description of an error"
+    )
+    parser.add_argument(
+        "-Ee", "-Eerrors", "--exclude-errors",
+        nargs="+",
+        metavar="ERROR",
+        help="Exclude coding style errors from report"
+    )
+    parser.add_argument(
+        "-Ef", "-Efiles", "--exclude-files",
+        nargs="+",
+        metavar="FILE",
+        help="Exclude files from coding style checking"
+    )
+    parser.add_argument(
+        "-w", "--watch",
+        nargs=1,
+        metavar="SECONDS",
+        type=int,
+        help="Watch for changes in the repository every x seconds. Ctrl + C to exit"
+    )
+    parser.add_argument(
+        "-q", "--quiet",
+        action="store_true",
+        help="Don’t output anything, just set exit status"
+    )
+    parser.add_argument(
+        "-v", "--version",
+        action="store_true",
+        help="Show Mango version"
+    )
+    parser.add_argument(
+        "-u", "--update",
+        action="store_true",
+        help="Update Mango to last version (actually not working, you should do it manually)"
+    )
     return parser.parse_args()
 
 
@@ -288,7 +363,7 @@ def download_coding_style(is_lambdananas):
         print(f"""You are using \33[1mHaskell\33[0m, so you need to download \33[3m{LAMBDANANAS}\33[0m
 You can get it on the intranet (\33[3mAdministration/Documents publics/Public/technical-documentations/Haskell/{LAMBDANANAS}.tar.gz\33[0m)
 Don't forget to add it to your PATH""")
-        sys.exit(1)
+        exit(1)
 
     download_command = which("wget") or which("curl")
 
@@ -296,30 +371,68 @@ Don't forget to add it to your PATH""")
     if download_command is None:
         print(" and neither \33[3wget\33[0m nor \33[3curl\33[0m were found on your computer,"
               f" so please download \33[3m{CODING_STYLE}\33[0m here: {CODING_STYLE_URL}"
-              f" and/or add it to your path")
+              f" and/or add it to your PATH")
     print(" download it? [Y/n] ", end="")
-
-    key = input().lower()
-
-    if key not in ("", "y", "yes", "o", "oui"):
+    if input().lower() not in ("", "y", "yes", "o", "oui"):
         print(f"You must have the \33[3m{CODING_STYLE}\33[0m command to be able to use \33[1mMango\33[0m")
-        sys.exit(1)
+        exit(1)
     print(f"Downloading \33[3m{CODING_STYLE}\33[0m...")
 
-    system(f"sudo {download_command} {CODING_STYLE_URL}"
-           f" -{'O' if 'wget' in download_command  else 'o'} /bin/{CODING_STYLE} 2> /dev/null")
-    system(f"sudo chmod +x /bin/{CODING_STYLE}")
+    if system(f"sudo {download_command} {CODING_STYLE_URL} -{'O' if download_command.endswith('wget') else 'o'} /bin/{CODING_STYLE} 2> /dev/null"):
+        print(f"Error while downloading \33[3m{CODING_STYLE}\33[0m")
+        exit(1)
+    if system(f"sudo chmod +x /bin/{CODING_STYLE}"):
+        print(f"Error while setting permissions for \33[3m{CODING_STYLE}\33[0m")
+        exit(1)
     print(f"\33[3m{CODING_STYLE}\33[0m downloaded\n")
 
 
-def update():
-    print("Updating not working at the moment, it will be re-introduced in a future version.")
-    sys.exit(0)
+def list_errors(color, short=False):
+    bold = "\33[1m" if color else ""
+    italic = "\33[3m" if color else ""
+    reset = "\33[0m" if color else ""
+
+    print(f"Errors with code starting with {italic}C{reset} are for {bold}C{reset}, and {italic}H{reset} for {bold}Haskell{reset}\n")
+    for description in descriptions.items():
+        if not color:
+            __description = [sub('\33\\[[0-9;]+m', '', description[1][0]), sub('\33\\[[0-9;]+m', '', description[1][1] or '')]
+        else:
+            __description = description[1]
+
+        if short:
+            print(description[0])
+        else:
+            print(f"{bold}{description[0]}{reset}: {__description[0]}{reset}: {__description[1]}\n")
+    exit(0)
+
+
+def show_error(color, error):
+    bold = "\33[1m" if color else ""
+    reset = "\33[0m" if color else ""
+
+    try:
+        if not color:
+            description = [sub('\33\\[[0-9;]+m', '', descriptions[error][0]), sub('\33\\[[0-9;]+m', '', descriptions[error][1] or '')]
+        else:
+            description = descriptions[error]
+
+        print(f"{bold}{error}{reset}: {description[0]}{reset}")
+        if description[1]:
+            print(f"{description[1]}")
+    except KeyError:
+        print(f"Error {bold}{error}{reset} not found")
+    exit(0)
 
 
 def print_version():
     print(f"Mango {VERSION}")
-    sys.exit(0)
+    exit(0)
+
+
+def update():
+    print("""Updating not working at the moment, it will be re-introduced in a future version.
+In the meantime, you can do the same command as the one used to install Mango to update it => https://github.com/Clement-Z4RM/Mango?tab=readme-ov-file#with-wget""")
+    exit(0)
 
 
 def get_exclude_files(args):
@@ -349,7 +462,7 @@ def get_exclude_errors(args):
 
 
 def coding_style(checker):
-    if checker == LAMBDANANAS:
+    if checker.endswith(LAMBDANANAS):
         all_files = []
 
         for root, _dirs, files in walk("./"):
@@ -358,69 +471,100 @@ def coding_style(checker):
             for name in files:
                 full_path = path.join(root, name)
                 all_files.append(full_path)
-        system(f"{checker} {' '.join(all_files)} > ./{CODING_STYLE}-reports.log")
+        if not all_files:
+            return []
+        all_files_joined = " ".join(["'{}'".format(element) for element in all_files])
+        system(f"{checker} {all_files_joined} > ./{CODING_STYLE}-reports.log 2>&1")
     else:
         system(f"{checker} . ./ > /dev/null")
-    try:
-        with open(f"./{CODING_STYLE}-reports.log", "r", encoding="utf-8") as file:
-            out = file.read()
-            file.close()
-    except:
-        print(f"{argv[0]}: Cannot open log file.", file=stderr)
-        sys.exit(1)
-    try:
-        remove(f"./{CODING_STYLE}-reports.log")
-    except:
-        print(f"{argv[0]}: Cannot remove log file.", file=stderr)
-        sys.exit(1)
-    out = out.split("\n")
-    return out
+    with open(f"./{CODING_STYLE}-reports.log", "r", encoding="utf-8") as file:
+        out = file.read()
+        file.close()
+    remove(f"./{CODING_STYLE}-reports.log")
+    return out.split("\n")
 
 
-def print_error(line, rule):
-    color = f"\33[0m{colors[line[2]]}"
-    print(f"{color}\33[1m{line[0]}", end="")
+def print_error(line, rule, strings):
+    color = f"\33[0m{colors[line[2]]}" if strings["RESET"] else ""
+    if not strings["RESET"]:
+        rule = [sub('\33\\[[0-9;]+m', '', rule[0]), sub('\33\\[[0-9;]+m', '', rule[1] or '')]
+
+    print(f"{color}{strings['BOLD']}{line[0]}", end="")
     if int(line[1]) > 1:
         print(f" at line {line[1]}", end="")
-    print(f"\n{line[2][1:]} {line[3]}: {color}{rule[0]}\33[0m\n{rule[1]}\n")
+    print(f"\n{line[2][1:]} {line[3]}: {color}{rule[0]}{strings['RESET']}")
+    if rule[1]:
+        print(f"{rule[1]}")
+    print()
 
 
-def print_errors_number(err_nb, is_a_tty):
-    if err_nb[3] or err_nb[2] > 0 or err_nb[1] > 0 or err_nb[0] or err_nb[4] > 0:
-        if err_nb[3]:
-            print(f"\33[1;31m{err_nb[3]} Fatal\33[0m | ", end="")
-        print(f"\33[1;31m{err_nb[2]} Major\33[0m | \33[1;33m{err_nb[1]} Minor\33[0m | \33[1;36m{err_nb[0]} Info\33[0m",
-              end="")
-        if err_nb[4] > 0:
-            print(f" | \33[1;37m{err_nb[4]} Unknown\33[0m", end="")
-        if err_nb[5] > 0:
-            print(f" | \33[1;37m{err_nb[5]} excluded\33[0m", end="")
+def print_errors_number(errors, strings):
+    if errors["INFO"] or errors["MINOR"] or errors["MAJOR"] or errors["FATAL"] or errors["UNKNOWN"]:
+        if errors["FATAL"]:
+            print(f"{strings['RED']}{errors['FATAL']} Fatal{strings['RESET']} | ", end="")
+        print(
+            f"{strings['RED']}{errors['MAJOR']} Major{strings['RESET']} | {strings['YELLOW']}{errors['MINOR']} Minor{strings['RESET']} | {strings['BLUE']}{errors['INFO']} Info{strings['RESET']}",
+            end="")
+        if errors["UNKNOWN"]:
+            print(f" | {strings['GRAY']}{errors['UNKNOWN']} Unknown{strings['RESET']}", end="")
+        if errors["EXCLUDED"]:
+            print(f" | {strings['GRAY']}{errors['EXCLUDED']} excluded{strings['RESET']}", end="")
+        if errors["IGNORED"]:
+            print(f" | {strings['GRAY']}{errors['IGNORED']} ignored{strings['RESET']}", end="")
         print()
-    elif not is_a_tty:
-        print(f"{MANGO_ASCII}    ✅ There is no coding style error")
-        if err_nb[5] > 0:
-            print(f"\nBe careful, you still have {err_nb[5]} excluded errors")
-    else:
-        print(f"{MANGO_TTY}    but you have no coding style error :)")
-        if err_nb[5] > 0:
-            print(f"\nBe careful, you still have {err_nb[5]} excluded errors")
+        return 1
+    print(strings["MANGO"])
+    if errors["EXCLUDED"] or errors["IGNORED"]:
+        print(f"\nBe careful, you still have", end="")
+        if errors["EXCLUDED"]:
+            print(f" {errors['EXCLUDED']} excluded", end="")
+        if errors["EXCLUDED"] and errors["IGNORED"]:
+            print(" and", end="")
+        if errors["IGNORED"]:
+            print(f" {errors['IGNORED']} ignored", end="")
+        print(" errors")
+        return 1
+    return 0
 
 
-def mango(exclude_files, exclude_errors, checker):
+def mango(checker, exclude_files, exclude_errors, git, quiet, should_clear=False):
     out = coding_style(checker)
-    # [INFO, MINOR, MAJOR, FATAL, UNKNOWN, EXCLUDED]
-    err_nb = [0, 0, 0, 0, 0, 0]
+    errors = {
+        "INFO": 0,
+        "MINOR": 0,
+        "MAJOR": 0,
+        "FATAL": 0,
+        "UNKNOWN": 0,
+        "EXCLUDED": 0,
+        "IGNORED": 0
+    }
+    strings = {
+        "MANGO": MANGO_TTY,
+        "BOLD": "",
+        "RED": "",
+        "YELLOW": "",
+        "BLUE": "",
+        "GRAY": "",
+        "RESET": ""
+    }
     try:
-        is_a_tty = "tty" in ttyname(1)
-    except:
-        is_a_tty = True
+        if "tty" not in ttyname(1):
+            strings["MANGO"] = MANGO_ASCII
+        strings["BOLD"] = "\33[1m"
+        strings["RED"] = "\33[1;31m"
+        strings["YELLOW"] = "\33[1;33m"
+        strings["BLUE"] = "\33[1;36m"
+        strings["GRAY"] = "\33[1;37m"
+        strings["RESET"] = "\33[0m"
+    except OSError:
+        pass
 
+    if should_clear:
+        system("clear")
     if not out:
-        if not is_a_tty:
-            print(f"{MANGO_ASCII}    ✅ There is no coding style error")
-        else:
-            print(f"{MANGO_TTY}    but you have no coding style error :)")
-        return
+        if not quiet:
+            print(strings["MANGO"])
+        return 0
     for line in out:
         backup_line = line
         if line == "":
@@ -429,57 +573,68 @@ def mango(exclude_files, exclude_errors, checker):
         if line[0].endswith("contains forbidden extensions"):
             line = [line[0].split(" ")[0], "1", " MAJOR", "H-O2"]
         line[3] = line[3].split(" #")[0]
+        if line[0][0:2] == "./":
+            line[0] = line[0][2:]
         try:
             if path.abspath(line[0]) in exclude_files or line[3] in exclude_errors:
-                err_nb[5] += 1
+                errors["EXCLUDED"] += 1
+                continue
+            if git and not system(f"{git} check-ignore -q '{line[0]}' > /dev/null 2>&1"):
+                errors["IGNORED"] += 1
                 continue
             rule = descriptions[line[3]]
         except:
-            print(f"{backup_line}\n")
-            err_nb[4] += 1
+            if not quiet:
+                print(f"{backup_line}\n")
+            errors["UNKNOWN"] += 1
             continue
-        if line[0][0:2] == "./":
-            line[0] = line[0][2:]
-        match line[2]:
-            case " INFO":
-                err_nb[0] += 1
-            case " MINOR":
-                err_nb[1] += 1
-            case " MAJOR":
-                err_nb[2] += 1
-            case " FATAL":
-                err_nb[3] += 1
-        print_error(line, rule)
-    print_errors_number(err_nb, is_a_tty)
+        errors[line[2][1:]] += 1
+        if not quiet:
+            print_error(line, rule, strings)
+    if not quiet:
+        return print_errors_number(errors, strings)
+    else:
+        errors_values = errors.values()
+        return int(not all(value == 0 for value in errors_values))
 
 
 def main():
     args = set_arguments()
-    checker = LAMBDANANAS if args.haskell else CODING_STYLE
+    # 0: not a tty, 1: tty, 2: error (maybe redirected)
+    try:
+        is_a_tty = 1 if "tty" in ttyname(1) else 0
+    except OSError:
+        is_a_tty = 2
 
+    if args.list or args.short_list:
+        list_errors(is_a_tty != 2, args.short_list)
+    if args.show:
+        show_error(is_a_tty != 2, args.show[0].upper())
     if args.version:
         print_version()
     if args.update:
         update()
-    if which(checker) is None:
-        download_coding_style(checker == LAMBDANANAS)
+
+    checker = which(LAMBDANANAS if args.haskell else CODING_STYLE)
+
+    if checker is None:
+        download_coding_style(args.haskell)
 
     exclude_files = get_exclude_files(args)
     exclude_errors = get_exclude_errors(args)
+    git = None if args.ignore else which("git")
 
     if args.watch:
+        to_return = 0
         sleep_duration = int(args.watch[0])
         while True:
             try:
-                system("clear")
-                mango(exclude_files, exclude_errors, checker)
+                to_return = mango(checker, exclude_files, exclude_errors, git, args.quiet, True)
                 sleep(sleep_duration)
             except KeyboardInterrupt:
-                sys.exit(0)
-            except:
-                sys.exit(1)
+                exit(to_return)
     else:
-        mango(exclude_files, exclude_errors, checker)
+        exit(mango(checker, exclude_files, exclude_errors, git, args.quiet))
 
 
 if __name__ == "__main__":
