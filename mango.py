@@ -7,7 +7,7 @@ from re import sub
 from shutil import which
 from time import sleep
 
-VERSION = "v1.9.1"
+VERSION = "v1.9.2"
 
 LAMBDANANAS = "lambdananas"
 CODING_STYLE = "coding-style"
@@ -524,7 +524,6 @@ def print_errors_number(errors, strings):
         if errors["IGNORED"]:
             print(f" {errors['IGNORED']} ignored", end="")
         print(" errors")
-        return 1
     return 0
 
 
