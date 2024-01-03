@@ -361,7 +361,7 @@ def set_arguments():
 def download_coding_style(is_lambdananas):
     if is_lambdananas:
         print(f"""You are using \33[1mHaskell\33[0m, so you need to download \33[3m{LAMBDANANAS}\33[0m
-You can get it on the intranet (\33[3mAdministration/Documents publics/Public/technical-documentations/Haskell/{LAMBDANANAS}.tar.gz\33[0m)
+You can get it on the intranet (https://intra.epitech.eu/file/Public/technical-documentations/Haskell/lambdananas.tar.gz)
 Don't forget to add it to your PATH""")
         exit(1)
 

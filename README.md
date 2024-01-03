@@ -19,7 +19,10 @@ I decline all responsibility if you have a coding style error not detected by Ma
 It executes the coding style checker on your files and then parses the output to display it in a more readable way.
 
 **For Haskell:**
-> **Mango** uses **lambdananas** and parses its output to display it in a more readable way.
+> **Mango** uses **lambdananas** and parses its output to display it in a more readable way.\
+> The arguments that **Mango** uses for **lambdananas** are the current directory (`./`) and all `.hs` files in hidden directories.
+
+**lambdananas** is only checking `.hs` files, but if you have another file(s) like `Makefike`, you should also use `mango` (without `-H` flag) to check them.
 
 ## 🔧 Installation
 
@@ -46,7 +49,7 @@ sudo chmod +x /bin/mango
 ```
 ### For Haskell
 To use **Mango** with **Haskell**, you can use it just like that, but it's better to have **lambdananas** (faster than **coding-style**) and maybe detect more errors.\
-You can get it on the intranet (*Administration/Documents publics/Public/technical-documentations/Haskell/lambdananas.tar.gz*).\
+You can get it on the [intranet](https://intra.epitech.eu/file/Public/technical-documentations/Haskell/lambdananas.tar.gz).\
 Don't forget to add it to your *PATH*.
 
 ## ⚙ Usage
