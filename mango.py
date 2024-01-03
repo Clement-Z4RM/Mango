@@ -7,7 +7,7 @@ from re import sub
 from shutil import which
 from time import sleep
 
-VERSION = "v1.9.2"
+VERSION = "v1.9.3"
 
 LAMBDANANAS = "lambdananas"
 CODING_STYLE = "coding-style"
