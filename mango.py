@@ -467,15 +467,17 @@ def coding_style(checker):
         all_files = []
 
         for root, _dirs, files in walk("./"):
-            if root.startswith(("./.git", "./test", "./tests", "./bonus")):
+            if root.startswith(("./.git", "./test", "./tests", "./bonus")) or not root.startswith("./."):
                 continue
             for name in files:
+                if not name.endswith(".hs"):
+                    continue
                 full_path = path.join(root, name)
                 all_files.append(full_path)
         if not all_files:
             return []
         all_files_joined = " ".join(["'{}'".format(element) for element in all_files])
-        system(f"{checker} {all_files_joined} > ./{CODING_STYLE}-reports.log 2>&1")
+        system(f"{checker} './' {all_files_joined} > ./{CODING_STYLE}-reports.log 2>&1")
     else:
         system(f"{checker} . ./ > /dev/null")
     with open(f"./{CODING_STYLE}-reports.log", "r", encoding="utf-8") as file:
