@@ -467,7 +467,7 @@ def coding_style(checker):
         all_files = []
 
         for root, _dirs, files in walk("./"):
-            if root.startswith(("./.git", "./test", "./tests", "./bonus")) or not root.startswith("./."):
+            if root.startswith(("./.git", "./test", "./tests", "./bonus")):
                 continue
             for name in files:
                 if not name.endswith(".hs"):
