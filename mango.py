@@ -492,9 +492,7 @@ def print_error(line, rule, strings):
     if not strings["RESET"]:
         rule = [sub('\33\\[[0-9;]+m', '', rule[0]), sub('\33\\[[0-9;]+m', '', rule[1] or '')]
 
-    print(f"{color}{strings['BOLD']}{line[0]}", end="")
-    if int(line[1]) > 1:
-        print(f" at line {line[1]}", end="")
+    print(f"{color}{strings['BOLD']}{line[0]}:{line[1]}", end="")
     print(f"\n{line[2][1:]} {line[3]}: {color}{rule[0]}{strings['RESET']}")
     if rule[1]:
         print(f"{rule[1]}")
