@@ -319,6 +319,7 @@ def set_arguments():
     parser.add_argument(
         "-s", "--show",
         nargs=1,
+        metavar="ERROR",
         help="Show description of an error"
     )
     parser.add_argument(
@@ -331,7 +332,7 @@ def set_arguments():
         "-Ef", "-Efiles", "--exclude-files",
         nargs="+",
         metavar="FILE",
-        help="Exclude files from coding style checking"
+        help="Exclude files (or directories) from coding style checking"
     )
     parser.add_argument(
         "-w", "--watch",
