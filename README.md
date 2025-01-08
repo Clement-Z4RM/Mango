@@ -1,16 +1,13 @@
 # 🥭 Mango
 
-## 🆕 New
-**Mango is now available for Haskell**\
-Check installation section for more information\
-
-**By default, Mango will ignore the files contained in your .gitignore**
-
 ## 🤔 What is Mango?
 
 **Mango** is an improved and skinned [**C**](https://github.com/Epitech/coding-style-checker) and **Haskell** Epitech coding style checker.
 
-I decline all responsibility if you have a coding style error not detected by Mango (there is no reason for this to happen). 😉
+> [!TIP]
+> By default, **Mango** will ignore the files contained in your `.gitignore`.
+
+> I decline all responsibility if you have a coding style error not detected by Mango (there is no reason for this to happen). 😉
 
 #### How does it work?
 
