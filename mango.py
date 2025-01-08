@@ -104,7 +104,7 @@ colors = {
 __descriptions = {
     "O1": [
         "Contents of the repository",
-        "The repository should contain only files required for compilation and must not contain compiled (\33[3m.o, .hi, .a, .so, ...\33[0m), temporary or unnecessary files  (\33[3m*~ * #, *.d, toto, ...\33[0m)."
+        "The repository must not contain compiled (\33[3m.o, .a, .so, ...\33[0m), temporary or unnecessary files (\33[3m*~, #*#, ...\33[0m)."
     ]
 }
 
